@@ -4,6 +4,8 @@
     display: flex;
     align-content: flex-start;
 
+    position: relative;
+
     cursor: pointer;
 
     img {
@@ -28,9 +30,30 @@
 
     border-bottom: 1px solid #EEEEEE;
 
-    transition: 300ms ease-out;
+    // transition: 300ms ease-out;
 
     &:hover {
         background-color: darken(#EEEFFF, 3%);
+
+        // i {
+        //     transform: translateY(-50%) translateX(-.5rem);
+        //     opacity: 1;
+        // }
     }
+
+    // i {
+    //     font-size: 2rem;
+
+    //     position: absolute;
+
+    //     color: grey;
+    //     opacity: 0;
+
+    //     top: 50%;
+    //     right: 1rem;
+
+    //     transform: translateY(-50%);
+
+    //     transition: 100ms ease-out;
+    // }
 }

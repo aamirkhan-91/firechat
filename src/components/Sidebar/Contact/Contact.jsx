@@ -10,6 +10,8 @@ const contact = (props) => (
         <div>
             <h3>{props.name}</h3>
             <p>Some text...</p>
+
+            {/* <i className='fa fa-caret-right'></i> */}
         </div>
     </div>
 );

@@ -9,7 +9,8 @@ const header = () => (
         <img className='thumbnail' src={pp} />
 
         <div>
-            <i className="fa fa-envelope" />
+            <i className="fa fa-search" />
+            <i className="fa fa-paperclip" />
             <i className="fa fa-ellipsis-h" />
         </div>
     </header>
