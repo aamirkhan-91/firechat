@@ -1,0 +1,30 @@
+header.sidebar-header {
+    padding: 1rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    flex: 0 0 auto;
+
+    background-color: #EEEEEE;
+
+    > div {
+        i {
+            display: inline-block;
+            font-size: 2rem;
+
+            color: #80868A;
+
+            cursor: pointer;
+
+            &:not(:last-child) {
+                margin-right: 1rem;
+            }
+
+            &:last-child {
+                transform: rotate(90deg);
+            }
+        }
+    }
+}

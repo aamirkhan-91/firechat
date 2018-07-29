@@ -1,0 +1,11 @@
+.chat {
+    height: 100%;
+    width: calc(100% - 400px);
+
+    display: flex;
+    flex-direction: column;
+
+    .test {
+        // height: 100%;
+    }
+}

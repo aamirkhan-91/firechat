@@ -1,0 +1,36 @@
+.contact {
+    padding: 1.5rem;
+
+    display: flex;
+    align-content: flex-start;
+
+    cursor: pointer;
+
+    img {
+        display: inline-block;
+    }
+
+    > div {
+        margin-left: 1rem;
+    }
+
+    h3 {
+        display: inline-block;
+
+        font-weight: bold;
+        font-size: 1.6rem;
+    }
+
+    p {
+        margin-top: .5rem;
+        font-size: 1.3rem;
+    }
+
+    border-bottom: 1px solid #EEEEEE;
+
+    transition: 300ms ease-out;
+
+    &:hover {
+        background-color: darken(#EEEFFF, 3%);
+    }
+}
