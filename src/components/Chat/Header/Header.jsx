@@ -11,8 +11,12 @@ const header = () => (
     <img className="thumbnail" src={pp} />
 
     <div>
-      <i className="fa fa-search" />
-      <i className="fa fa-paperclip" />
+      <div className='icon'>
+        <i className="fa fa-search" />
+      </div>
+      <div className='icon'>
+        <i className="fa fa-paperclip" />
+      </div>
       <Dropdown iconName="fa-ellipsis-v">
         <span>Contact Info</span>
         <span>Clear Messages</span>

@@ -10,17 +10,6 @@ header.chat-header {
     background-color: #EEEEEE;
 
     > div {
-        position: relative;
-
-        i {
-            display: inline-block;
-            font-size: 2rem;
-
-            color: #80868A;
-
-            cursor: pointer;
-
-            margin-right: 3rem;
-        }
+        display: flex;
     }
 }

@@ -11,7 +11,6 @@ const sidebarHeader = () => (
     <img className='thumbnail' src={pp} />
 
     <div>
-      {/* <i className="fa fa-envelope" /> */}
       <Dropdown
         iconName='fa-ellipsis-v'>
         <span>Profile</span>
