@@ -10,6 +10,8 @@ header.chat-header {
     background-color: #EEEEEE;
 
     > div {
+        position: relative;
+
         i {
             display: inline-block;
             font-size: 2rem;
@@ -18,13 +20,7 @@ header.chat-header {
 
             cursor: pointer;
 
-            &:not(:last-child) {
-                margin-right: 3rem;
-            }
-
-            &:last-child {
-                transform: rotate(90deg);
-            }
+            margin-right: 3rem;
         }
     }
 }
