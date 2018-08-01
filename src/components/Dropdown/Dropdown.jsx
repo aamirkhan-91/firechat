@@ -30,7 +30,7 @@ class Dropdown extends Component {
             <div onClick={this.dropdownClickHandler} className="icon">
                 <i className={classes} />
                 <CSSTransition classNames="dropdown" mountOnEnter unmountOnExit appear timeout={250} in={this.state.show}>
-                <div className="dropdown">{this.props.children}</div>
+                    <div className="dropdown">{this.props.children}</div>
                 </CSSTransition>
             </div>
         );
