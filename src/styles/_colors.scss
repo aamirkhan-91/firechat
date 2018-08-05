@@ -1,0 +1,14 @@
+$colors: (
+  "primary": #673ab7,
+  "primary-dark": #512da8,
+  "primary-light": #d1c4e9,
+  "warn": #ff5722,
+  "text": #212121,
+  "text-secondary": #757575,
+  "accent": #eeeeee,
+  "icon": #80868a
+);
+
+@function color($key) {
+  @return map-get($colors, $key);
+}

@@ -1,18 +1,17 @@
-import React from 'react';
+import React from "react";
 
-import Dropdown from '../../Dropdown/Dropdown';
+import Dropdown from "../../Dropdown/Dropdown";
 
-import pp from '../../../assets/pp.jpg';
+import pp from "../../../assets/pp.jpg";
 
-import './Header.scss';
+import "./Header.scss";
 
 const sidebarHeader = () => (
-   <header className="sidebar-header">
-    <img className='thumbnail' src={pp} />
+  <header className="sidebar-header">
+    <img className="thumbnail" src={pp} />
 
     <div>
-      <Dropdown
-        iconName='fa-ellipsis-v'>
+      <Dropdown iconName="fa-ellipsis-v">
         <span>Profile</span>
         <span>Settings</span>
         <span>Logout</span>

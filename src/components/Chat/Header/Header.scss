@@ -1,15 +1,17 @@
+@import "@/styles/_colors.css";
+
 header.chat-header {
-    padding: 1rem;
+  padding: 1rem;
 
-    width: 100%;
+  width: 100%;
 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: color("accent");
+
+  > div {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    background-color: #EEEEEE;
-
-    > div {
-        display: flex;
-    }
+  }
 }

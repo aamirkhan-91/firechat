@@ -1,36 +1,38 @@
+@import "@/styles/_colors.css";
+
 .chat-input {
-    padding: 1rem 2rem;
+  padding: 1rem 2rem;
+
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: color("accent");
+
+  margin-top: auto;
+
+  input {
+    font-family: inherit;
+
+    padding: 1rem;
 
     width: 100%;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin: 0 1rem;
 
-    background-color: #EEEEEE;
+    outline: none;
 
-    margin-top: auto;
+    border-radius: 10px;
 
-    input {
-        font-family: inherit;
+    border: 1px solid color("accent");
+  }
 
-        padding: 1rem;
+  i {
+    font-size: 2rem;
+    color: color("icon");
 
-        width: 100%;
-
-        margin: 0 1rem;
-
-        outline: none;
-
-        border-radius: 10px;
-
-        border: 1px solid #EEEEEE;
-    }
-
-    i {
-        font-size: 2rem;
-        color: #80868A;
-
-        cursor: pointer;
-    }
+    cursor: pointer;
+  }
 }

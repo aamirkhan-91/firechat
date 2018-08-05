@@ -1,61 +1,44 @@
+@import "@/styles/_colors.scss";
+
 .contact {
-    padding: 1.5rem;
+  padding: 1.5rem;
 
-    display: flex;
-    align-content: flex-start;
+  display: flex;
+  align-content: flex-start;
 
-    position: relative;
+  position: relative;
 
-    user-select: none;
+  user-select: none;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    img {
-        display: inline-block;
-    }
+  img {
+    display: inline-block;
+  }
 
-    > div {
-        margin-left: 1rem;
-    }
+  > div {
+    margin-left: 1rem;
+  }
 
-    h3 {
-        display: inline-block;
+  h3 {
+    display: inline-block;
 
-        font-weight: bold;
-        font-size: 1.6rem;
-    }
+    color: color("text");
 
-    p {
-        margin-top: .5rem;
-        font-size: 1.3rem;
-    }
+    font-weight: bold;
+    font-size: 1.6rem;
+  }
 
-    border-bottom: 1px solid #EEEEEE;
+  p {
+    margin-top: 0.5rem;
+    font-size: 1.3rem;
 
-    // transition: 300ms ease-out;
+    color: color("text-secondary");
+  }
 
-    &:hover {
-        background-color: darken(#EEEFFF, 3%);
+  border-bottom: 1px solid color("accent");
 
-        // i {
-        //     transform: translateY(-50%) translateX(-.5rem);
-        //     opacity: 1;
-        // }
-    }
-
-    // i {
-    //     font-size: 2rem;
-
-    //     position: absolute;
-
-    //     color: grey;
-    //     opacity: 0;
-
-    //     top: 50%;
-    //     right: 1rem;
-
-    //     transform: translateY(-50%);
-
-    //     transition: 100ms ease-out;
-    // }
+  &:hover {
+    background-color: color("accent");
+  }
 }

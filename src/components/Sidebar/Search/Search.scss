@@ -1,33 +1,35 @@
+@import "@/styles/_colors.scss";
+
 .contact-search {
-    padding: 1rem 2rem;
+  padding: 1rem 2rem;
 
-    position: relative;
+  position: relative;
 
-    border-bottom: 1px solid #EEEEEE;
+  border-bottom: 1px solid color("accent");
 
-    input {
-        font-family: inherit;
+  input {
+    font-family: inherit;
 
-        width: 100%;
-        padding: .55rem;
-        border: 1px solid rgb(220, 220, 220);
+    width: 100%;
+    padding: 0.55rem;
+    border: 1px solid darken(color("accent"), 10%);
 
-        border-radius: 10px;
+    border-radius: 10px;
 
-        outline: none;
+    outline: none;
 
-        text-indent: 3rem;
-    }
+    text-indent: 3rem;
+  }
 
-    i {
-        position: absolute;
+  i {
+    position: absolute;
 
-        top: 50%;
-        left: 3.25rem;
-        transform: translateY(-50%);
+    top: 50%;
+    left: 3.25rem;
+    transform: translateY(-50%);
 
-        font-size: 1.6rem;
+    font-size: 1.6rem;
 
-        color: #80868A;
-    }
+    color: color("icon");
+  }
 }

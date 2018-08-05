@@ -1,25 +1,26 @@
+@import "@/styles/_colors.scss";
+
 header.sidebar-header {
-    padding: 1rem;
+  padding: 1rem;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    flex: 0 0 auto;
+  flex: 0 0 auto;
 
-    background-color: #EEEEEE;
+  background-color: color("accent");
 
+  > div {
+    i {
+      display: inline-block;
+      font-size: 2rem;
 
-    > div {
-        i {
-            display: inline-block;
-            font-size: 2rem;
+      color: color("icon");
 
-            color: #80868A;
+      cursor: pointer;
 
-            cursor: pointer;
-
-            margin-right: 1rem;
-        }
+      margin-right: 1rem;
     }
+  }
 }

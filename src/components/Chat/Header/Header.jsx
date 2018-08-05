@@ -1,20 +1,20 @@
-import React from 'react';
+import React from "react";
 
-import Dropdown from '../../Dropdown/Dropdown';
+import Dropdown from "../../Dropdown/Dropdown";
 
-import pp from '../../../assets/pp.jpg';
+import pp from "../../../assets/pp.jpg";
 
-import './Header.scss';
+import "./Header.scss";
 
 const header = () => (
   <header className="chat-header">
     <img className="thumbnail" src={pp} />
 
     <div>
-      <div className='icon'>
+      <div className="icon">
         <i className="fa fa-search" />
       </div>
-      <div className='icon'>
+      <div className="icon">
         <i className="fa fa-paperclip" />
       </div>
       <Dropdown iconName="fa-ellipsis-v">

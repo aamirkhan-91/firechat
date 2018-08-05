@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react";
 
-import Header from './Header/Header';
-import Input from './Input/Input';
+import Header from "./Header/Header";
+import Input from "./Input/Input";
 
-import './Chat.scss';
+import "./Chat.scss";
 
 const chat = () => (
-    <div className='chat'>
-        <Header/>
-        <div className='test'></div>
-        <Input />
-    </div>
+  <div className="chat">
+    <Header />
+    <div className="test" />
+    <Input />
+  </div>
 );
 
 export default chat;

@@ -1,11 +1,9 @@
-import React from 'react';
-import { hot } from 'react-hot-loader';
+import React from "react";
+import { hot } from "react-hot-loader";
 
-import Layout from './containers/Layout/Layout';
+import Layout from "./containers/Layout/Layout";
 
-const app = () => (
-    <Layout />
-);
+const app = () => <Layout />;
 
 /* eslint-disable */
 export default hot(module)(app);
