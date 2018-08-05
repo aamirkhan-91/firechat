@@ -1,6 +1,6 @@
 import React from "react";
 
-import Dropdown from "../../Dropdown/Dropdown";
+import Dropdown from "../../UI/Dropdown/Dropdown";
 
 import pp from "../../../assets/pp.jpg";
 
