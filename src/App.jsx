@@ -1,6 +1,6 @@
 import React from "react";
 import { hot } from "react-hot-loader";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 
 import Layout from "./containers/Layout/Layout";
 import Auth from "./containers/Auth/Auth";
@@ -11,6 +11,7 @@ const app = () => (
   <Aux>
     <Route path="/auth" component={Auth} />
     <Route path="/app" component={Layout} />
+    <Route exact path="/" render={() => <Redirect to="/app" />} />
   </Aux>
 );
 
