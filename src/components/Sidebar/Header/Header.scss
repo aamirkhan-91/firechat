@@ -4,14 +4,24 @@ header.sidebar-header {
   padding: 1rem;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
 
   flex: 0 0 auto;
 
   background-color: color("accent");
 
+  img {
+    margin-right: 1rem;
+  }
+
+  h3 {
+    color: color("text");
+  }
+
   > div {
+    margin-left: auto;
+
     i {
       display: inline-block;
       font-size: 2rem;

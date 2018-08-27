@@ -4,34 +4,18 @@ import Header from "./Header/Header";
 import Contact from "./Contact/Contact";
 import Search from "./Search/Search";
 
+import Loader from '@/utilities/Loader/Loader';
+
 import "./Sidebar.scss";
 
-const sidebar = () => (
+const sidebar = props =>  (
   <div className="sidebar">
-    <Header />
-    <Search />
+    <Header user={props.user} />
+    <Search changed={props.filterHandler} />
 
     <div className="contact-list">
-      <Contact name="Bassam Raza" />
-      <Contact name="Muneeb Khawaja" />
-      <Contact name="Taha Sohail" />
-      <Contact name="Azfar Kashif" />
-      <Contact name="Bassam Raza" />
-      <Contact name="Muneeb Khawaja" />
-      <Contact name="Taha Sohail" />
-      <Contact name="Azfar Kashif" />
-      <Contact name="Bassam Raza" />
-      <Contact name="Muneeb Khawaja" />
-      <Contact name="Taha Sohail" />
-      <Contact name="Azfar Kashif" />
-      <Contact name="Bassam Raza" />
-      <Contact name="Muneeb Khawaja" />
-      <Contact name="Taha Sohail" />
-      <Contact name="Azfar Kashif" />
-      <Contact name="Bassam Raza" />
-      <Contact name="Muneeb Khawaja" />
-      <Contact name="Taha Sohail" />
-      <Contact name="Azfar Kashif" />
+      <Loader show={props.loading} transition={true} overlay={true} />
+      {props.contacts.map(contact => <Contact clicked={() => props.onContactSelected(contact)} key={contact.uid} name={contact.fullName} />)}
     </div>
   </div>
 );

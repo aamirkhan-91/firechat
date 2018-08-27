@@ -6,12 +6,21 @@ header.chat-header {
   width: 100%;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+
+  h3 {
+    color: color("text");
+  }
+
+  img {
+    margin-right: 1rem;
+  }
 
   background-color: color("accent");
 
   > div {
+    margin-left: auto;
     display: flex;
   }
 }

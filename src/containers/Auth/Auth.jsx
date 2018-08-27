@@ -7,8 +7,6 @@ import Signin from "./Signin";
 import "./Auth.scss";
 
 class Auth extends Component {
-  state = {};
-
   render() {
     return (
       <div className="auth">

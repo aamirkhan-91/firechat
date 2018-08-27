@@ -2,12 +2,24 @@ import React from "react";
 
 import "./Input.scss";
 
-const input = () => (
-  <div className="chat-input">
-    <i className="fa fa-smile" />
-    <input placeholder="Type a message..." />
-    <i className="fa fa-microphone" />
-  </div>
-);
+const input = props => {
+
+  let textInput = React.createRef();
+
+  function handleClick() {
+    props.send(textInput.current.value);
+
+    textInput.current.value = '';
+  }
+
+  return (
+    <div className="chat-input">
+      <input ref={textInput} placeholder="Type a message..." />
+      <div onClick={handleClick} className="icon">
+        <i className="fa fa-play" />
+      </div>
+    </div>
+  );
+}
 
 export default input;

@@ -6,9 +6,10 @@ import pp from "../../../assets/pp.jpg";
 
 import "./Header.scss";
 
-const header = () => (
+const header = props => (
   <header className="chat-header">
     <img className="thumbnail" src={pp} />
+    { props.contact ? <h3>{props.contact.fullName}</h3> : null }
 
     <div>
       <div className="icon">

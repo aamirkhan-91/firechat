@@ -5,9 +5,23 @@ import { Link } from "react-router-dom";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 
+import firebase from "@/config/firebase";
+
+import Loader from '@/utilities/Loader/Loader';
+
 class Signup extends Component {
   state = {
     signupForm: {
+      name: {
+        name: "name",
+        label: "Full Name",
+        type: "text",
+        validation: {
+          required: true
+        },
+        value: "",
+        valid: false
+      },
       email: {
         name: "email",
         label: "Email",
@@ -32,19 +46,50 @@ class Signup extends Component {
         valid: false
       },
       isValid: false
-    }
+    },
+    loading: false
   };
 
-  inputChangedHandler = (inputIdentifier, isValid) => {
+  inputChangedHandler = (inputIdentifier, isValid, value) => {
     const form = { ...this.state.signupForm };
 
     form[inputIdentifier].valid = isValid;
+    form[inputIdentifier].value = value;
 
     this.setState({
       signupForm: form
     });
 
     this.checkFormValid();
+  };
+
+  submitHandler = () => {
+    this.setState({
+      loading: true
+    });
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(
+        this.state.signupForm.email.value,
+        this.state.signupForm.password.value
+      )
+      .then(response => {
+        firebase
+          .database()
+          .ref("users/" + response.user.uid)
+          .set({
+            uid: response.user.uid,
+            fullName: this.state.signupForm.name.value,
+            email: response.user.email
+          });
+
+          this.setState({
+            loading: false
+          });
+      })
+      .catch(() => {
+      });
   };
 
   checkFormValid() {
@@ -69,6 +114,14 @@ class Signup extends Component {
 
         <div>
           <Input
+            name={this.state.signupForm.name.name}
+            changed={this.inputChangedHandler}
+            label={this.state.signupForm.name.label}
+            type={this.state.signupForm.name.type}
+            required={this.state.signupForm.name.required}
+            validation={this.state.signupForm.name.validation}
+          />
+          <Input
             name={this.state.signupForm.email.name}
             changed={this.inputChangedHandler}
             label={this.state.signupForm.email.label}
@@ -86,11 +139,17 @@ class Signup extends Component {
           />
         </div>
 
-        <Button disabled={this.state.signupForm.isValid} text="Submit" />
+        <Button
+          clicked={this.submitHandler}
+          disabled={this.state.signupForm.isValid}
+          text="Submit"
+        />
 
         <span>
           Already have an account? <Link to="/auth/signin">Sign In.</Link>
         </span>
+
+        <Loader show={this.state.loading} overlay={true} transition={true} />
       </div>
     );
   }

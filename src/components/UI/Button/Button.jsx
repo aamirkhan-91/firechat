@@ -4,7 +4,11 @@ import "./Button.scss";
 
 const button = props => {
   return (
-    <button disabled={props.disabled} className="btn btn-primary">
+    <button
+      onClick={props.clicked}
+      disabled={props.disabled}
+      className="btn btn-primary"
+    >
       {props.text}
     </button>
   );

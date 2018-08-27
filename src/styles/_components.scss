@@ -10,10 +10,6 @@
 
   cursor: pointer;
 
-  &:not(:last-child) {
-    margin-right: 2rem;
-  }
-
   border-radius: 50%;
 
   transition: 250ms ease;

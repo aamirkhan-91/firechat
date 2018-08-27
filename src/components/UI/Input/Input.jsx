@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition } from "react-transition-group";
 
-import './Input.scss';
+import "./Input.scss";
 
 class Input extends Component {
   state = {
@@ -31,7 +31,7 @@ class Input extends Component {
     this.setState({ focussed: false });
   };
 
-  onInputChanged = (event) => {
+  onInputChanged = event => {
     let hasText = this.state.hasText;
 
     if (event.target.value) {
@@ -48,14 +48,14 @@ class Input extends Component {
       touched: true
     });
 
-    this.props.changed(this.props.name, isValid);
+    this.props.changed(this.props.name, isValid, event.target.value);
   };
 
-  checkValidity = (value) => {
+  checkValidity = value => {
     let isValid = false;
 
     if (this.validation.required) {
-      isValid = value !== '';
+      isValid = value !== "";
 
       this.validity.required = !isValid;
     }
@@ -81,24 +81,24 @@ class Input extends Component {
     let classes = [];
 
     if (this.state.focussed) {
-      classes.push('focussed');
+      classes.push("focussed");
     }
 
     if (!this.state.valid && this.state.touched) {
-      classes.push('has-error');
+      classes.push("has-error");
     }
 
     if (this.validity.required) {
-      this.errorMessage = this.props.label + ' is required.';
+      this.errorMessage = this.props.label + " is required.";
     } else if (this.validity.pattern || this.validity.minLength) {
-      this.errorMessage = 'Please enter a valid ' + this.props.label;
+      this.errorMessage = "Please enter a valid " + this.props.label;
     }
 
     return (
-      <div className={'form-input ' + classes.join(' ')}>
+      <div className={"form-input " + classes.join(" ")}>
         <label
           className={
-            'form-input__label' + (this.state.hasText ? ' has-text' : '')
+            "form-input__label" + (this.state.hasText ? " has-text" : "")
           }
         >
           {this.props.label}
@@ -109,18 +109,23 @@ class Input extends Component {
           onBlur={this.onInputBlurred}
           type={this.props.type}
           required={this.props.validation.required}
-          minLength={this.props.validation.minLength ? this.props.validation.minLength : 0}
-          className='form-input__input'
+          minLength={
+            this.props.validation.minLength
+              ? this.props.validation.minLength
+              : 0
+          }
+          className="form-input__input"
         />
         <CSSTransition
-          classNames='error'
+          classNames="error"
           timeout={250}
           in={this.state.touched && !this.state.valid}
           mountOnEnter
-          unmountOnExit>
-            <p className='form-input__error-message'>{this.errorMessage}</p>
+          unmountOnExit
+        >
+          <p className="form-input__error-message">{this.errorMessage}</p>
         </CSSTransition>
-        <span className='form-input__status' />
+        <span className="form-input__status" />
       </div>
     );
   }

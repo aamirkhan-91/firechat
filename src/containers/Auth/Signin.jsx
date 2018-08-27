@@ -5,6 +5,10 @@ import { Link } from "react-router-dom";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 
+import Loader from "@/utilities/Loader/Loader";
+
+import firebase from "@/config/firebase";
+
 class Signin extends Component {
   state = {
     signupForm: {
@@ -32,19 +36,44 @@ class Signin extends Component {
         valid: false
       },
       isValid: false
-    }
+    },
+    loading: false
   };
 
-  inputChangedHandler = (inputIdentifier, isValid) => {
+  inputChangedHandler = (inputIdentifier, isValid, value) => {
     const form = { ...this.state.signupForm };
 
     form[inputIdentifier].valid = isValid;
+    form[inputIdentifier].value = value;
 
     this.setState({
       signupForm: form
     });
 
     this.checkFormValid();
+  };
+
+  submitHandler = () => {
+    this.setState({
+      loading: true
+    });
+
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(
+        this.state.signupForm.email.value,
+        this.state.signupForm.password.value
+      )
+      .then(() => {
+        this.setState({
+          loading: false
+        });
+      })
+      .catch(() => {
+        this.setState({
+          loading: false
+        });
+      });
   };
 
   checkFormValid() {
@@ -86,11 +115,16 @@ class Signin extends Component {
           />
         </div>
 
-        <Button disabled={this.state.signupForm.isValid} text="Submit" />
+        <Button
+          clicked={this.submitHandler}
+          disabled={this.state.signupForm.isValid}
+          text="Submit"
+        />
 
         <span>
           Already have an account? <Link to="/auth/signup">Sign Up.</Link>
         </span>
+        <Loader transition={true} overlay={true} show={this.state.loading} />
       </div>
     );
   }
