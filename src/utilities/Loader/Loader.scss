@@ -1,0 +1,41 @@
+.loader {
+  position: absolute;
+
+  height: 100%;
+  width: 100%;
+
+  z-index: 10;
+
+  background-color: white;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  top: 0;
+  left: 0;
+
+  &.overlay {
+    z-index: 9;
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+}
+
+.loader-enter,
+.loader-appear {
+  opacity: 0;
+}
+
+.loader-enter-active,
+.loader-appear-active {
+  opacity: 1;
+
+  transition: 350ms ease;
+}
+
+.loader-exit-active {
+  opacity: 0;
+
+  transition: 350ms ease;
+}
