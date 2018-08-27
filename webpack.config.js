@@ -18,7 +18,7 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        use: ["babel-loader", "eslint-loader"]
+        use: ["babel-loader"]
       },
       {
         test: /\.s?css$/,
@@ -41,7 +41,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(["dist"]),
+    // new CleanWebpackPlugin(["dist"]),
     new HtmlWebpackPlugin({
       template: "./src/index.html"
     })
