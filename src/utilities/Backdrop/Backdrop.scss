@@ -1,0 +1,26 @@
+.backdrop {
+  height: 100vh;
+  width: 100%;
+
+  position: fixed;
+
+  background-color: rgba(0, 0, 0, 0.35);
+
+  z-index: 10;
+}
+
+.backdrop-appear {
+  opacity: 0;
+}
+
+.backdrop-appear-active {
+  opacity: 1;
+
+  transition: 250ms ease;
+}
+
+.backdrop-exit-active {
+  opacity: 0;
+
+  transition: 250ms ease;
+}
