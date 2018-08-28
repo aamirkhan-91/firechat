@@ -44,15 +44,19 @@ class App extends Component {
 
   render() {
     let authenticated = this.state.user ? true : false;
+    let content = !this.state.initialLoad ? (
+    <Aux>
+      {authenticated ? <Redirect to="/app" /> : <Redirect to="/auth" />}
+
+
+      <Route path="/app" component={Layout} />
+      <Route path="/auth" component={Auth} />
+    </Aux>) : null;
 
     return (
       <Aux>
-        {authenticated ? <Redirect to="/app" /> : <Redirect to="/auth" />}
-
+        { content }
         <Loader show={this.state.initialLoad} />
-
-        <Route path="/app" component={Layout} />
-        <Route path="/auth" component={Auth} />
       </Aux>
     );
   }
