@@ -10,7 +10,7 @@ import "./Sidebar.scss";
 
 const sidebar = props =>  (
   <div className="sidebar">
-    <Header user={props.user} />
+    <Header onLogout={props.onLogout} user={props.user} />
     <Search changed={props.filterHandler} />
 
     <div className="contact-list">

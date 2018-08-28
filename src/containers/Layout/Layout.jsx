@@ -19,6 +19,10 @@ export default class Layout extends Component {
     chatId: null
   };
 
+  logoutHandler() {
+    firebase.auth().signOut();
+  }
+
   componentDidMount() {
     let user = firebase.auth().currentUser;
 
@@ -78,7 +82,6 @@ export default class Layout extends Component {
       selectedContact: contact
     });
 
-    // firestore.collection('chats/' + this.state.currentUser.uid + '/' + contact.uid).on('value', (data) => {
     firestore.collection('chats')
       .where("members", "array-contains", this.state.currentUser.uid)
       .onSnapshot(chats => {
@@ -124,6 +127,7 @@ export default class Layout extends Component {
     return (
       <div className="container">
         <Sidebar
+          onLogout={this.logoutHandler}
           user={this.state.currentUser}
           filterHandler={this.contactFilterChangeHandler}
           loading={this.state.loadingContacts}
