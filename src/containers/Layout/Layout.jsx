@@ -3,7 +3,8 @@ import React, { Component } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Chat from "../../components/Chat/Chat";
 
-import firebase from "@/config/firebase";
+import firebase, { firestore } from "@/config/firebase";
+import _firebase from "firebase";
 
 import './Layout.scss';
 
@@ -14,7 +15,8 @@ export default class Layout extends Component {
     selectedContact: null,
     loadingContacts: false,
     currentUser: null,
-    messages: []
+    messages: [],
+    chatId: null
   };
 
   componentDidMount() {
@@ -25,19 +27,17 @@ export default class Layout extends Component {
         loadingContacts: true
       });
 
-      firebase.database().ref('users').once('value').then((snapshot) => {
-
-        let data = snapshot.val();
-        let keys = Object.keys(data);
-
+      firestore.collection('users').onSnapshot((snapshot) => {
         let currentUser;
 
         let contacts = [];
-        keys.forEach(key => {
-          if (data[key].uid !== user.uid) {
-            contacts.push(data[key]);
+        snapshot.forEach(doc => {
+          let contact = doc.data();
+
+          if (contact.uid !== user.uid) {
+            contacts.push(doc.data());
           } else {
-            currentUser = data[key];
+            currentUser = contact;
           }
         });
 
@@ -74,39 +74,68 @@ export default class Layout extends Component {
   }
 
   contactSelectedHandler = (contact) => {
-    debugger;
     this.setState({
       selectedContact: contact
     });
 
-    firebase.database().ref('chats/' + this.state.currentUser.uid + '/' + contact.uid).on('value', (data) => {
-      let messagesData = data.val();
-      let keys = Object.keys(messagesData);
+    // firestore.collection('chats/' + this.state.currentUser.uid + '/' + contact.uid).on('value', (data) => {
+    firestore.collection('chats')
+      .where("members", "array-contains", this.state.currentUser.uid)
+      .onSnapshot(chats => {
+        let chatWithSelectedContact = null;
+        let chatId = null;
 
-      let messages = [];
-      keys.forEach(key => {
-        messages.push(messagesData[key]);
-      });
+        chats.forEach(chatData => {
+          let chat = chatData.data();
 
-      this.setState({
-        messages: messages
-      });
+          if (chat.members.includes(contact.uid)) {
+            chatWithSelectedContact = chat;
+            chatId = chatData.ref.id;
+          }
+        });
+
+        if (!chatWithSelectedContact) {
+          firestore.collection('chats').add({
+            members: [contact.uid, this.state.currentUser.uid],
+            messages: []
+          });
+        } else {
+          let messages = chatWithSelectedContact.messages;
+
+          this.setState({
+            messages: messages,
+            chatId: chatId
+          });
+        }
     });
   }
 
   sendMessageHandler = (message) => {
-    firebase.database().ref('chats/' + this.state.currentUser.uid + '/' + this.state.selectedContact.uid).push({
-      sender: this.state.currentUser.uid,
-      recipient: this.state.selectedContact.uid,
-      message: message
+    firestore.collection('chats').doc(this.state.chatId).update({
+      messages: _firebase.firestore.FieldValue.arrayUnion({
+        sender: this.state.currentUser.uid,
+        receiver: this.state.selectedContact.uid,
+        message: message
+      })
     });
   }
 
   render() {
     return (
       <div className="container">
-        <Sidebar user={this.state.currentUser} filterHandler={this.contactFilterChangeHandler} loading={this.state.loadingContacts} contacts={this.state.filteredContacts} onContactSelected={this.contactSelectedHandler} />
-        {this.state.selectedContact ? <Chat onSendMessage={this.sendMessageHandler} messages={this.state.messages} selectedContact={this.state.selectedContact} /> : <div className="no-contact">Select a Contact to get started!</div> }
+        <Sidebar
+          user={this.state.currentUser}
+          filterHandler={this.contactFilterChangeHandler}
+          loading={this.state.loadingContacts}
+          contacts={this.state.filteredContacts}
+          onContactSelected={this.contactSelectedHandler} />
+        {
+          this.state.selectedContact ?
+          <Chat
+            onSendMessage={this.sendMessageHandler}
+            messages={this.state.messages}
+            selectedContact={this.state.selectedContact}
+            currentUser={this.state.currentUser} /> : <div className="no-contact"> Select a Contact to get started! </div> }
       </div>
     );
   }

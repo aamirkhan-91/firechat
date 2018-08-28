@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 
-import firebase from "@/config/firebase";
+import firebase, { firestore } from "@/config/firebase";
 
 import Loader from '@/utilities/Loader/Loader';
 
@@ -75,9 +75,9 @@ class Signup extends Component {
         this.state.signupForm.password.value
       )
       .then(response => {
-        firebase
-          .database()
-          .ref("users/" + response.user.uid)
+        firestore
+          .collection("users")
+          .doc(response.user.uid)
           .set({
             uid: response.user.uid,
             fullName: this.state.signupForm.name.value,
