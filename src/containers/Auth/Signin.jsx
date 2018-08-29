@@ -12,45 +12,57 @@ import firebase from "@/config/firebase";
 class Signin extends Component {
   state = {
     signupForm: {
-      email: {
-        name: "email",
-        label: "Email",
-        type: "text",
-        validation: {
-          required: true,
-          pattern: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
+      fields: [
+        {
+          name: "email",
+          label: "Email",
+          type: "text",
+          validation: {
+            required: true,
+            pattern: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
+          },
+          value: "",
+          valid: false
         },
-        value: "",
-        valid: false
-      },
-      password: {
-        name: "password",
-        label: "Password",
-        type: "password",
-        validation: {
-          required: true,
-          minLength: 8
+        {
+          name: "password",
+          label: "Password",
+          type: "password",
+          validation: {
+            required: true,
+            minLength: 8
+          },
+          minLength: 8,
+          value: "",
+          valid: false
         },
-        minLength: 8,
-        value: "",
-        valid: false
-      },
+      ],
       isValid: false
     },
     loading: false
   };
 
+  getFormFieldByName(fields, name) {
+    for (let i = 0; i < fields.length; i++) {
+      if (fields[i].name === name) {
+        return i;
+      }
+    }
+  }
+
   inputChangedHandler = (inputIdentifier, isValid, value) => {
     const form = { ...this.state.signupForm };
 
-    form[inputIdentifier].valid = isValid;
-    form[inputIdentifier].value = value;
+    let fieldIndex = this.getFormFieldByName(form.fields, inputIdentifier);
+
+    form.fields[fieldIndex].valid = isValid;
+    form.fields[fieldIndex].value = value;
+
+    form.isValid = this.checkFormValid(form);
 
     this.setState({
       signupForm: form
     });
-
-    this.checkFormValid();
   };
 
   submitHandler = () => {
@@ -61,8 +73,8 @@ class Signin extends Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(
-        this.state.signupForm.email.value,
-        this.state.signupForm.password.value
+        this.state.signupForm.fields[0].value,
+        this.state.signupForm.fields[1].value
       )
       .then(() => {
         this.setState({
@@ -76,19 +88,18 @@ class Signin extends Component {
       });
   };
 
-  checkFormValid() {
-    // let signupForm = {...this.state.signupForm};
-    // let isFormValid = true;
-    // let test = Object.keys(signupForm)
-    // .map((key) => {
-    //     if ('valid' in signupForm[key]) {
-    //         return true;
-    //     }
-    // });
-    // signupForm.isValid = isFormValid;
-    // this.setState({
-    //     signupForm: signupForm
-    // });
+  checkFormValid(form) {
+    let isFormValid = true;
+
+    let fields = form.fields;
+
+    fields.forEach(field => {
+      if (!field.valid && isFormValid) {
+        isFormValid = false;
+      }
+    });
+
+    return isFormValid;
   }
 
   render() {
@@ -98,26 +109,26 @@ class Signin extends Component {
 
         <div>
           <Input
-            name={this.state.signupForm.email.name}
+            name={this.state.signupForm.fields[0].name}
             changed={this.inputChangedHandler}
-            label={this.state.signupForm.email.label}
-            type={this.state.signupForm.email.type}
-            required={this.state.signupForm.email.required}
-            validation={this.state.signupForm.email.validation}
+            label={this.state.signupForm.fields[0].label}
+            type={this.state.signupForm.fields[0].type}
+            required={this.state.signupForm.fields[0].required}
+            validation={this.state.signupForm.fields[0].validation}
           />
           <Input
-            name={this.state.signupForm.password.name}
+            name={this.state.signupForm.fields[1].name}
             changed={this.inputChangedHandler}
-            label={this.state.signupForm.password.label}
-            type={this.state.signupForm.password.type}
-            required={this.state.signupForm.password.required}
-            validation={this.state.signupForm.password.validation}
+            label={this.state.signupForm.fields[1].label}
+            type={this.state.signupForm.fields[1].type}
+            required={this.state.signupForm.fields[1].required}
+            validation={this.state.signupForm.fields[1].validation}
           />
         </div>
 
         <Button
           clicked={this.submitHandler}
-          disabled={this.state.signupForm.isValid}
+          disabled={!this.state.signupForm.isValid}
           text="Submit"
         />
 
