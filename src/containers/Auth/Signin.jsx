@@ -103,7 +103,6 @@ class Signin extends Component {
   }
 
   render() {
-    this.state.signupForm.fields.map(field => console.log(field));
     return (
       <div className="auth__card">
         <div className="auth__card__header">Sign In</div>
@@ -111,8 +110,8 @@ class Signin extends Component {
         <div>
           {this.state.signupForm.fields.map(field => (
             <Input
-              name={field.name}
               changed={this.inputChangedHandler}
+              name={field.name}
               label={field.label}
               type={field.type}
               required={field.required}
