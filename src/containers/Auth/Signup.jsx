@@ -118,50 +118,30 @@ class Signup extends Component {
   }
 
   render() {
-    return (
-      <div className="auth__card">
+    return <div className="auth__card">
         <div className="auth__card__header">Create Account</div>
 
         <div>
-          <Input
-            changed={this.inputChangedHandler}
-            name={this.state.signupForm.fields[0].name}
-            label={this.state.signupForm.fields[0].label}
-            type={this.state.signupForm.fields[0].type}
-            required={this.state.signupForm.fields[0].required}
-            validation={this.state.signupForm.fields[0].validation}
-          />
-          <Input
-            changed={this.inputChangedHandler}
-            name={this.state.signupForm.fields[1].name}
-            label={this.state.signupForm.fields[1].label}
-            type={this.state.signupForm.fields[1].type}
-            required={this.state.signupForm.fields[1].required}
-            validation={this.state.signupForm.fields[1].validation}
-          />
-          <Input
-            changed={this.inputChangedHandler}
-            name={this.state.signupForm.fields[2].name}
-            label={this.state.signupForm.fields[2].label}
-            type={this.state.signupForm.fields[2].type}
-            required={this.state.signupForm.fields[2].required}
-            validation={this.state.signupForm.fields[2].validation}
-          />
+          {this.state.signupForm.fields.map(field => (
+            <Input
+              name={field.name}
+              changed={this.inputChangedHandler}
+              label={field.label}
+              type={field.type}
+              required={field.required}
+              validation={field.validation}
+            />
+          ))}
         </div>
 
-        <Button
-          clicked={this.submitHandler}
-          disabled={!this.state.signupForm.isValid}
-          text="Submit"
-        />
+        <Button clicked={this.submitHandler} disabled={!this.state.signupForm.isValid} text="Submit" />
 
         <span>
           Already have an account? <Link to="/auth/signin">Sign In.</Link>
         </span>
 
         <Loader show={this.state.loading} overlay={true} transition={true} />
-      </div>
-    );
+      </div>;
   }
 }
 

@@ -103,27 +103,22 @@ class Signin extends Component {
   }
 
   render() {
+    this.state.signupForm.fields.map(field => console.log(field));
     return (
       <div className="auth__card">
         <div className="auth__card__header">Sign In</div>
 
         <div>
-          <Input
-            name={this.state.signupForm.fields[0].name}
-            changed={this.inputChangedHandler}
-            label={this.state.signupForm.fields[0].label}
-            type={this.state.signupForm.fields[0].type}
-            required={this.state.signupForm.fields[0].required}
-            validation={this.state.signupForm.fields[0].validation}
-          />
-          <Input
-            name={this.state.signupForm.fields[1].name}
-            changed={this.inputChangedHandler}
-            label={this.state.signupForm.fields[1].label}
-            type={this.state.signupForm.fields[1].type}
-            required={this.state.signupForm.fields[1].required}
-            validation={this.state.signupForm.fields[1].validation}
-          />
+          {this.state.signupForm.fields.map(field => (
+            <Input
+              name={field.name}
+              changed={this.inputChangedHandler}
+              label={field.label}
+              type={field.type}
+              required={field.required}
+              validation={field.validation}
+            />
+          ))}
         </div>
 
         <Button
