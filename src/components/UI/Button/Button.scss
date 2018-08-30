@@ -31,12 +31,30 @@
     box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.6);
   }
 
+  &:enabled {
+    animation: enable 500ms ease;
+  }
+
   &:disabled {
     background-color: grey;
     cursor: not-allowed;
 
     transform: none;
     box-shadow: none;
+  }
+
+  @keyframes enable {
+    0% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.1);
+    }
+
+    100% {
+      transform: scale(1);
+    }
   }
 }
 
