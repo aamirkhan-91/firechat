@@ -3,9 +3,9 @@ import { CSSTransition } from "react-transition-group";
 
 import "./Backdrop.scss";
 
-const backdrop = () => {
+const backdrop = props => {
   return (
-    <CSSTransition appear in={true} timeout={350} classNames="backdrop">
+    <CSSTransition appear in={props.show} mountOnEnter unmountOnExit timeout={350} classNames="backdrop">
       <div className="backdrop" />
     </CSSTransition>
   );

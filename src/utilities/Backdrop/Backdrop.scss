@@ -9,18 +9,20 @@
   z-index: 10;
 }
 
-.backdrop-appear {
+.backdrop-appear,
+.backdrop-enter {
   opacity: 0;
 }
 
-.backdrop-appear-active {
+.backdrop-appear-active,
+.backdrop-enter-active {
   opacity: 1;
 
-  transition: 250ms ease;
+  transition: 350ms ease;
 }
 
 .backdrop-exit-active {
   opacity: 0;
 
-  transition: 250ms ease;
+  transition: 350ms ease;
 }
