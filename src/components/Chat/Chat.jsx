@@ -23,7 +23,7 @@ const chat = props => {
     <div className="chat">
       <Header contact={props.selectedContact} />
       <div className="chat__messages">
-        <div className="chat__messages__date">{currentDate}</div>
+        { props.messages.length ? <div className="chat__messages__date">{currentDate}</div> : null }
         { props.messages.length ? props.messages.map(message => {
           let date = moment(message.timestamp).format('DD/MM/YYYY');
 
