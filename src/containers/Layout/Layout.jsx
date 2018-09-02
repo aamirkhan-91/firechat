@@ -114,11 +114,13 @@ export default class Layout extends Component {
   }
 
   sendMessageHandler = (message) => {
+    debugger;
     firestore.collection('chats').doc(this.state.chatId).update({
       messages: _firebase.firestore.FieldValue.arrayUnion({
         sender: this.state.currentUser.uid,
         receiver: this.state.selectedContact.uid,
-        message: message
+        message: message,
+        timestamp: new Date()
       })
     });
   }
