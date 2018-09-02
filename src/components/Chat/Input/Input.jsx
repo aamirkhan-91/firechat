@@ -13,9 +13,15 @@ const input = props => {
     }
   }
 
+  function handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      handleClick();
+    }
+  }
+
   return (
     <div className="chat-input">
-      <input ref={textInput} placeholder="Type a message..." />
+      <input onKeyUp={handleKeyPress} ref={textInput} placeholder="Type a message..." />
       <div onClick={handleClick} className="icon">
         <i className="fa fa-play" />
       </div>
