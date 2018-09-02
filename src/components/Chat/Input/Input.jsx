@@ -7,9 +7,10 @@ const input = props => {
   let textInput = React.createRef();
 
   function handleClick() {
-    props.send(textInput.current.value);
-
-    textInput.current.value = '';
+    if (textInput.current.value) {
+      props.send(textInput.current.value);
+      textInput.current.value = '';
+    }
   }
 
   return (

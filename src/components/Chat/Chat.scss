@@ -1,3 +1,5 @@
+@import "@/styles/_colors.scss";
+
 .chat {
   height: 100%;
   width: calc(100% - 400px);
@@ -13,8 +15,19 @@
 
     align-items: flex-start;
 
+    overflow-y: auto;
+
     padding: 2rem 3rem;
 
     background-color: #E5DDD5;
+
+    &::-webkit-scrollbar {
+      width: 0.75rem;
+      border-left: 1px solid darken(color("accent"), 10%);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: darken(color("accent"), 30%);
+    }
   }
 }

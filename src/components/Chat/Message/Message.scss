@@ -1,3 +1,5 @@
+@import "@/styles/_colors.scss";
+
 .message {
   padding: 1rem;
 
@@ -5,7 +7,8 @@
 
   display: inline-block;
 
-  background-color: white;
+  background-color: #DCF8C6;
+  color: color("text");
 
   border-radius: 0 5px 5px 5px;
 
@@ -22,15 +25,17 @@
     right: 100%;
 
     border-left: 5px solid transparent;
-    border-top: 5px solid white;
+    border-top: 5px solid #DCF8C6;
     border-bottom: 5px solid transparent;
-    border-right: 5px solid white;
+    border-right: 5px solid #DCF8C6;
   }
 
   &.sender {
     margin-left: auto;
 
     border-radius: 5px 0 5px 5px;
+
+    background-color: white;
 
     &::before {
       content: '';
