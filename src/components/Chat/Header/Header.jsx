@@ -1,6 +1,6 @@
 import React from "react";
 
-import Dropdown from "../../UI/Dropdown/Dropdown";
+// import Dropdown from "../../UI/Dropdown/Dropdown";
 
 import pp from "../../../assets/pp.jpg";
 
@@ -11,7 +11,7 @@ const header = props => (
     <img className="thumbnail" src={pp} />
     { props.contact ? <h3>{props.contact.fullName}</h3> : null }
 
-    <div>
+    {/* <div>
       <div className="icon">
         <i className="fa fa-search" />
       </div>
@@ -23,7 +23,7 @@ const header = props => (
         <span>Clear Messages</span>
         <span>Delete Chat</span>
       </Dropdown>
-    </div>
+    </div> */}
   </header>
 );
 
