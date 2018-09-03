@@ -15,23 +15,22 @@ const chat = props => {
 
   let currentDate;
   if (props.messages.length) {
-    currentDate = moment(props.messages[0].timestamp).format('DD/MM/YYYY');
-    debugger;
+    currentDate = moment(props.messages[0].timestamp);
   }
 
   return (
     <div className="chat">
       <Header contact={props.selectedContact} />
       <div className="chat__messages">
-        { props.messages.length ? <div className="chat__messages__date">{currentDate}</div> : null }
+        { props.messages.length ? <div className="chat__messages__date">{relativeDate(currentDate)}</div> : null }
         { props.messages.length ? props.messages.map(message => {
-          let date = moment(message.timestamp).format('DD/MM/YYYY');
+          let date = moment(message.timestamp);
 
-          if (date !== currentDate) {
+          if (!date.isSame(currentDate, 'day')) {
             currentDate = date;
             return (
               <Aux>
-                <div className="chat__messages__date">{currentDate}</div>
+                <div className="chat__messages__date">{relativeDate(currentDate)}</div>
                 <Message currentUser={props.currentUser} message={message} />
               </Aux>
             );
@@ -44,5 +43,15 @@ const chat = props => {
     </div>
   );
 };
+
+function relativeDate(date) {
+  let today = moment();
+
+  if (today.isSame(date, 'day')) {
+    return 'TODAY';
+  } else if (today.subtract(1, 'days').isSame(date, 'day')) {
+    return 'YESTERDAY';
+  } else return date.format('DD/MM/YYYY');
+}
 
 export default chat;
