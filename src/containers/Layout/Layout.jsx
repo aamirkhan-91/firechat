@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Chat from "../../components/Chat/Chat";
 
+import SidebarTrigger from '@/utilities/SidebarTrigger/SidebarTrigger';
+
 import firebase, { firestore } from "@/config/firebase";
 import _firebase from "firebase";
 
@@ -16,7 +18,8 @@ export default class Layout extends Component {
     loadingContacts: false,
     currentUser: null,
     messages: [],
-    chatId: null
+    chatId: null,
+    sidebarVisible: false
   };
 
   logoutHandler() {
@@ -111,10 +114,15 @@ export default class Layout extends Component {
           });
         }
     });
+
+    if (window.innerWidth <= 900) {
+      this.setState({
+        sidebarVisible: false
+      });
+    }
   }
 
   sendMessageHandler = (message) => {
-    debugger;
     firestore.collection('chats').doc(this.state.chatId).update({
       messages: _firebase.firestore.FieldValue.arrayUnion({
         sender: this.state.currentUser.uid,
@@ -125,10 +133,18 @@ export default class Layout extends Component {
     });
   }
 
+  toggleSidebar = () => {
+    this.setState({
+      sidebarVisible: !this.state.sidebarVisible
+    });
+  }
+
   render() {
     return (
       <div className="container">
+        <SidebarTrigger clicked={this.toggleSidebar} />
         <Sidebar
+          visible={this.state.sidebarVisible}
           onLogout={this.logoutHandler}
           user={this.state.currentUser}
           filterHandler={this.contactFilterChangeHandler}

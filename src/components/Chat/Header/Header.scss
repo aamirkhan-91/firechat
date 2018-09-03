@@ -23,4 +23,8 @@ header.chat-header {
     margin-left: auto;
     display: flex;
   }
+
+  @media(max-width: 900px) {
+    padding: 1rem 1rem 1rem 5rem;
+  }
 }

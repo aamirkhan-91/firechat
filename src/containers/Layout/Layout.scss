@@ -2,8 +2,9 @@
 
 .container {
   .no-contact {
-    width: calc(100% - 400px);
     height: 100%;
+
+    flex: 1;
 
     display: flex;
     justify-content: center;

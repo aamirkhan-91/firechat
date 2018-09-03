@@ -1,0 +1,18 @@
+.sidebar-trigger {
+  position: absolute;
+
+  padding: 2rem 1rem;
+
+  top: 0;
+  left: 0;
+
+  z-index: 100;
+
+  i {
+    color: rgba(0, 0, 0, .40);
+  }
+
+  @media(min-width: 901px) {
+    display: none;
+  }
+}
