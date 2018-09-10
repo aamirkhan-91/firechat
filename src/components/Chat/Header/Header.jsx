@@ -2,7 +2,7 @@ import React from "react";
 
 // import Dropdown from "../../UI/Dropdown/Dropdown";
 
-import pp from "../../../assets/pp.jpg";
+import pp from "../../../assets/pp.png";
 
 import "./Header.scss";
 
