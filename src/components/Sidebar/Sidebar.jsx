@@ -9,7 +9,7 @@ import Loader from '@/utilities/Loader/Loader';
 import "./Sidebar.scss";
 
 const sidebar = props =>  (
-  <div className={"sidebar " + (props.visible ? "visible" : null)}>
+  <div className={"sidebar " + (props.visible ? "visible" : '')}>
     <Header onLogout={props.onLogout} user={props.user} />
     <Search changed={props.filterHandler} />
 
