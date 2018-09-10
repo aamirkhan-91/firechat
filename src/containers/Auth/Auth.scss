@@ -17,16 +17,20 @@
 
     overflow: hidden;
 
-    width: 30%;
+    width: 20%;
+
+    @media (max-width: 1920px) {
+      width: 30%;
+    }
 
     @media (max-width: 1200px) {
-      width: 50%;
+      width: 40%;
     }
 
     @media (max-width: 900px) {
       width: 70%;
     }
-    
+
     @media (max-width: 500px) {
       width: 90%;
     }
