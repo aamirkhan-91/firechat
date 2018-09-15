@@ -46,4 +46,10 @@
       margin-bottom: 1rem;
     }
   }
+
+  transition: 250ms ease-out;
+
+  &.translated {
+    transform: translateX(300px);
+  }
 }

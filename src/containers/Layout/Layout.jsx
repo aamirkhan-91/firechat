@@ -154,6 +154,7 @@ export default class Layout extends Component {
         {
           this.state.selectedContact ?
           <Chat
+            sidebarVisible={this.state.sidebarVisible}
             onSendMessage={this.sendMessageHandler}
             messages={this.state.messages}
             selectedContact={this.state.selectedContact}
