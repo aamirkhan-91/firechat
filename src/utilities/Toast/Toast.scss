@@ -1,0 +1,65 @@
+.toast {
+  width: 100%;
+
+  color: white;
+
+  background-color: green;
+
+  padding: 1rem 2rem;
+
+  position: relative;
+
+  border-radius: 5px;
+
+  box-shadow: 2px 3px 10px rgba(0, 0, 0, .25);
+
+  backface-visibility: hidden;
+
+  &__title {
+    font-weight: bold;
+
+    font-size: 1.6rem;
+
+    margin-bottom: .5rem;
+  }
+
+  &__message {
+    font-size: 1.4rem;
+  }
+
+  &__dismiss {
+    position: absolute;
+
+    top: 2px;
+    right: 5px;
+
+    cursor: pointer;
+  }
+
+  &.error {
+    background-color: red;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+}
+
+.toast-enter {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.toast-enter-active {
+  transform: scale(1);
+  opacity: 1;
+
+  transition: 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toast-exit-active {
+  transform: translateX(100%);
+  opacity: 0;
+
+  transition: 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
