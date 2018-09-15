@@ -8,6 +8,7 @@ import Button from "../../components/UI/Button/Button";
 import Loader from "@/utilities/Loader/Loader";
 
 import firebase from "@/config/firebase";
+import ToastContainer from "../../utilities/Toast/ToastContainer";
 
 class Signin extends Component {
   state = {
@@ -41,6 +42,8 @@ class Signin extends Component {
     },
     loading: false
   };
+
+  toastContainerRef = React.createRef();
 
   getFormFieldByName(fields, name) {
     for (let i = 0; i < fields.length; i++) {
@@ -81,12 +84,26 @@ class Signin extends Component {
           loading: false
         });
       })
-      .catch(() => {
+      .catch((error) => {
         this.setState({
           loading: false
         });
+
+        this.handleAuthError(error);
       });
   };
+
+  handleAuthError(error) {
+    let message = 'An error has occurred. Please try again!';
+
+    if (error.code === 'auth/wrong-password') {
+      message = 'You have provided an invalid password! Please try again.';
+    } else if (error.code === 'auth/user-not-found') {
+      message = 'You have provided an invalid email address! Please try again.';
+    }
+
+    this.toastContainerRef.current.addErrorToast('Error', message);
+  }
 
   checkFormValid(form) {
     let isFormValid = true;
@@ -130,6 +147,8 @@ class Signin extends Component {
           Already have an account? <Link to="/auth/signup">Sign Up.</Link>
         </span>
         <Loader transition={true} overlay={true} show={this.state.loading} />
+
+        <ToastContainer ref={this.toastContainerRef} />
       </div>
     );
   }
