@@ -8,6 +8,7 @@ import Button from "../../components/UI/Button/Button";
 import firebase, { firestore } from "@/config/firebase";
 
 import Loader from '@/utilities/Loader/Loader';
+import ToastContainer from "../../utilities/Toast/ToastContainer";
 
 class Signup extends Component {
   state = {
@@ -52,6 +53,8 @@ class Signup extends Component {
     },
     loading: false
   };
+
+  toastContainerRef = React.createRef();
 
   getFormFieldByName(fields, name) {
     for (let i = 0; i < fields.length; i++) {
@@ -101,8 +104,24 @@ class Signup extends Component {
           loading: false
         });
       })
-      .catch(() => {});
+      .catch((error) => {
+        this.setState({
+          loading: false
+        });
+
+        this.handleAuthError(error);
+      });
   };
+
+  handleAuthError(error) {
+    let message = 'An error has occurred. Please try again!';
+
+    if (error.code === 'auth/email-already-in-use') {
+      message = 'The email you have provided is already in use! Please try Signing in.';
+    }
+
+    this.toastContainerRef.current.addErrorToast('Error', message);
+  }
 
   checkFormValid(form) {
     let isFormValid = true;
@@ -142,6 +161,8 @@ class Signup extends Component {
         </span>
 
         <Loader show={this.state.loading} overlay={true} transition={true} />
+
+        <ToastContainer ref={this.toastContainerRef} />
       </div>;
   }
 }
