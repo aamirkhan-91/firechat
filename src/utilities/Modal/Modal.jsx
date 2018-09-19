@@ -17,7 +17,7 @@ const modal = props => {
             <div className="modal__header">
               {props.title}
               <div onClick={props.onClose} className="modal__header__close-btn">
-                <i className="fa fa-times" />
+                <i className="fa fa-lg fa-times" />
               </div>
             </div>
             <div className="modal__content">

@@ -14,7 +14,6 @@
   align-items: center;
 
   .modal {
-    height: 250px;
     width: 400px;
 
     background-color: white;
@@ -52,7 +51,7 @@
     }
 
     &__content {
-      padding: 2rem;
+      padding: 2rem 0 0;
     }
   }
 }
