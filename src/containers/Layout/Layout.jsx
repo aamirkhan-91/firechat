@@ -8,6 +8,9 @@ import SidebarTrigger from '@/utilities/SidebarTrigger/SidebarTrigger';
 import firebase, { firestore } from "@/config/firebase";
 import _firebase from "firebase";
 
+import Modal from '@/utilities/Modal/Modal';
+import ContactDetails from '@/components/ContactDetails/ContactDetails';
+
 import './Layout.scss';
 
 export default class Layout extends Component {
@@ -19,7 +22,8 @@ export default class Layout extends Component {
     currentUser: null,
     messages: [],
     chatId: null,
-    sidebarVisible: false
+    sidebarVisible: false,
+    showContactDetails: false
   };
 
   logoutHandler() {
@@ -78,6 +82,18 @@ export default class Layout extends Component {
     this.setState({
       filteredContacts: filteredContacts
     })
+  }
+
+  viewContactDetails = () => {
+    this.setState({
+      showContactDetails: true
+    });
+  }
+
+  hideContactDetails = () => {
+    this.setState({
+      showContactDetails: false
+    });
   }
 
   contactSelectedHandler = (contact) => {
@@ -142,6 +158,9 @@ export default class Layout extends Component {
   render() {
     return (
       <div className="container">
+        <Modal onClose={this.hideContactDetails} show={this.state.showContactDetails} >
+          <ContactDetails contact={this.state.selectedContact} />
+        </Modal>
         <SidebarTrigger clicked={this.toggleSidebar} />
         <Sidebar
           visible={this.state.sidebarVisible}
@@ -154,6 +173,7 @@ export default class Layout extends Component {
         {
           this.state.selectedContact ?
           <Chat
+            viewContactDetails={this.viewContactDetails}
             sidebarVisible={this.state.sidebarVisible}
             onSendMessage={this.sendMessageHandler}
             messages={this.state.messages}

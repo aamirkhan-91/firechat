@@ -8,7 +8,7 @@ import "./Header.scss";
 
 const header = props => (
   <header className="chat-header">
-    <img className="thumbnail" src={pp} />
+    <img onClick={props.viewContactDetails} className="thumbnail" src={pp} />
     { props.contact ? <h3>{props.contact.fullName}</h3> : null }
 
     {/* <div>

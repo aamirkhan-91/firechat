@@ -20,7 +20,7 @@ const chat = props => {
 
   return (
     <div className={"chat" + (props.sidebarVisible ? ' translated' : '')}>
-      <Header contact={props.selectedContact} />
+      <Header viewContactDetails={props.viewContactDetails} contact={props.selectedContact} />
       <div className="chat__messages">
         { props.messages.length ? <div className="chat__messages__date">{relativeDate(currentDate)}</div> : null }
         { props.messages.length ? props.messages.map(message => {
