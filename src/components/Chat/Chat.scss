@@ -1,5 +1,3 @@
-@import "@/styles/_colors.scss";
-
 .chat {
   height: 100%;
   flex: 1;
@@ -23,11 +21,11 @@
 
     &::-webkit-scrollbar {
       width: 0.75rem;
-      border-left: 1px solid darken(color("accent"), 10%);
+      border-left: 1px solid darken(color("white"), 10%);
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: darken(color("accent"), 30%);
+      background-color: darken(color("white"), 30%);
     }
 
     &__date {

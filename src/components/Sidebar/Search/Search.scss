@@ -1,18 +1,16 @@
-@import "@/styles/_colors.scss";
-
 .contact-search {
   padding: 1rem 2rem;
 
   position: relative;
 
-  border-bottom: 1px solid color("accent");
+  border-bottom: 1px solid color("white");
 
   input {
     font-family: inherit;
 
     width: 100%;
     padding: 0.55rem;
-    border: 1px solid darken(color("accent"), 10%);
+    border: 1px solid darken(color("white"), 10%);
 
     border-radius: 10px;
 

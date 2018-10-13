@@ -1,5 +1,3 @@
-@import "@/styles/_colors.scss";
-
 header.chat-header {
   padding: 1rem;
 
@@ -19,7 +17,7 @@ header.chat-header {
     cursor: pointer;
   }
 
-  background-color: color("accent");
+  background-color: color("white");
 
   > div {
     margin-left: auto;

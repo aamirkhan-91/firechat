@@ -31,7 +31,13 @@ module.exports = {
               plugins: [new Autoprefixer()]
             }
           },
-          "sass-loader"
+          "sass-loader",
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              resources: ['./src/styles/_colors.scss']
+            }
+          }
         ]
       },
       {
