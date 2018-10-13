@@ -3,7 +3,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // const CleanWebpackPlugin = require("clean-webpack-plugin");
-// const Autoprefixer = require("autoprefixer");
+const Autoprefixer = require("autoprefixer");
 
 module.exports = {
   entry: './src/index.js',
@@ -24,12 +24,12 @@ module.exports = {
         use: [
           "style-loader",
           "css-loader",
-          // {
-          //   loader: "postcss-loader",
-          //   options: {
-          //     plugins: [new Autoprefixer()]
-          //   }
-          // },
+          {
+            loader: "postcss-loader",
+            options: {
+              plugins: [new Autoprefixer()]
+            }
+          },
           "sass-loader",
           {
             loader: 'sass-resources-loader',
