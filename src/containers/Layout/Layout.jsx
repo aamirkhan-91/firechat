@@ -3,13 +3,13 @@ import React, { Component } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Chat from "../../components/Chat/Chat";
 
-import SidebarTrigger from '@/utilities/SidebarTrigger/SidebarTrigger';
+import SidebarTrigger from '../../utilities/SidebarTrigger/SidebarTrigger';
 
-import firebase, { firestore } from "@/config/firebase";
+import firebase, { firestore } from "../../config/firebase";
 import _firebase from "firebase";
 
-import Modal from '@/utilities/Modal/Modal';
-import ContactDetails from '@/components/ContactDetails/ContactDetails';
+import Modal from '../../utilities/Modal/Modal';
+import ContactDetails from '../../components/ContactDetails/ContactDetails';
 
 import './Layout.scss';
 

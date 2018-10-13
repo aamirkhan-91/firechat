@@ -4,7 +4,7 @@ import Header from "./Header/Header";
 import Contact from "./Contact/Contact";
 import Search from "./Search/Search";
 
-import Loader from '@/utilities/Loader/Loader';
+import Loader from '../../utilities/Loader/Loader';
 
 import "./Sidebar.scss";
 

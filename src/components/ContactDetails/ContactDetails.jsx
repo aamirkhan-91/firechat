@@ -1,6 +1,6 @@
 import React from 'react'
 
-import pp from '@/assets/pp.png';
+import pp from '../../assets/pp.png';
 
 import './ContactDetails.scss';
 

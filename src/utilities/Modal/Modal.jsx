@@ -2,8 +2,8 @@ import React from "react";
 
 import { CSSTransition } from "react-transition-group";
 
-import Aux from "@/utilities/Auxillary";
-import Backdrop from "@/utilities/Backdrop/Backdrop";
+import Aux from "../Auxillary";
+import Backdrop from "../Backdrop/Backdrop";
 
 import "./Modal.scss";
 

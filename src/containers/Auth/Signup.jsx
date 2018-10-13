@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 
-import firebase, { firestore } from "@/config/firebase";
+import firebase, { firestore } from "../../config/firebase";
 
-import Loader from '@/utilities/Loader/Loader';
+import Loader from '../../utilities/Loader/Loader';
 import ToastContainer from "../../utilities/Toast/ToastContainer";
 
 class Signup extends Component {

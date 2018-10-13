@@ -5,7 +5,7 @@ import Input from "./Input/Input";
 
 import Message from './Message/Message';
 
-import Aux from '@/utilities/Auxillary';
+import Aux from '../../utilities/Auxillary';
 
 import moment from 'moment';
 
