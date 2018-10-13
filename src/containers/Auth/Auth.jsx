@@ -9,13 +9,12 @@ import Signin from "./Signin";
 import "./Auth.scss";
 
 const RouteContainer = posed.div({
-  enter: { opacity: 1, delay: 400, x: 0, applyAtStart: { x: '-100%', scale: 1 }, transition: { duration: 350 } },
-  exit: { opacity: 0, scale: 0, transition: { duration: 350 } }
+  enter: { opacity: 1, delay: 300, transition: { duration: 250 } },
+  exit: { opacity: 0, transition: { duration: 250 } }
 });
 
-const auth = props => {
-  return (
-    <div className="auth">
+const auth = props => (
+  <div className="auth">
     <Route render={({ location }) => (
       <PoseGroup>
         <RouteContainer key={location.key} >
@@ -39,8 +38,7 @@ const auth = props => {
         </RouteContainer>
       </PoseGroup>
     )} />
-    </div>
-  );
-}
+  </div>
+);
 
 export default auth;
