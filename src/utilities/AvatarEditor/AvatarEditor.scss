@@ -1,0 +1,53 @@
+#select-photo {
+  opacity: 0;
+  z-index: -1;
+  position: absolute;
+}
+
+.avatar-editor {
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  &__range {
+    margin-top: 2rem;
+
+    width: 75%;
+
+    outline: none;
+    appearance: none;
+  }
+}
+
+::range-thumb {
+  border-radius: 50%;
+
+  top: 50%;
+
+  appearance: none;
+
+  cursor: pointer;
+
+  width: 17px;
+  height: 17px;
+
+  background: color('accent');
+
+  position: absolute;
+
+  transform: translateY(-50%);
+}
+
+::range-track {
+  background: color('text-secondary');
+  width: 100%;
+  height: 6px;
+  border-radius: 5px;
+
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, .25);
+
+  position: relative;
+}

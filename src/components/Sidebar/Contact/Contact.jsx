@@ -4,16 +4,24 @@ import pp from "../../../assets/pp.png";
 
 import "./Contact.scss";
 
-const contact = props => (
-  <div onClick={props.clicked} className="contact">
-    <img src={pp} className="thumbnail" />
-    <div>
-      <h3>{props.name}</h3>
-      <p>Some text...</p>
+const contact = props => {
+  let image = <img src={pp} className="thumbnail" />;
 
-      {/* <i className='fa fa-caret-right'></i> */}
+  if (props.contact.photoUrl) {
+    image = <img src={props.contact.photoUrl} className="thumbnail" />;
+  }
+
+  return (
+    <div onClick={props.clicked} className="contact">
+      {image}
+      <div>
+        <h3>{props.contact.fullName}</h3>
+        {/* <p>Some text...</p> */}
+
+        {/* <i className='fa fa-caret-right'></i> */}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default contact;

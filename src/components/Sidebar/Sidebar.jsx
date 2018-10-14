@@ -15,7 +15,7 @@ const sidebar = props =>  (
 
     <div className="contact-list">
       <Loader show={props.loading} transition={true} overlay={true} />
-      {props.contacts.map(contact => <Contact clicked={() => props.onContactSelected(contact)} key={contact.uid} name={contact.fullName} />)}
+      {props.contacts.map(contact => <Contact clicked={() => props.onContactSelected(contact)} key={contact.uid} contact={contact} />)}
     </div>
   </div>
 );

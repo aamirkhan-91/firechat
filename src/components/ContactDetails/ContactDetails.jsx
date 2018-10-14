@@ -7,7 +7,7 @@ import './ContactDetails.scss';
 const contactDetails = props => (
   <div className="contact-details">
     <div className="contact-details__profile-picture">
-      <img src={pp} />
+      {props.contact.photoUrl ? <img src={props.contact.photoUrl} /> : <img src={pp} /> }
     </div>
 
     <div className="contact-details__info">

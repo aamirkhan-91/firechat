@@ -4,6 +4,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // const CleanWebpackPlugin = require("clean-webpack-plugin");
 const Autoprefixer = require("autoprefixer");
+const PostCSSInputRange = require("postcss-input-range");
 
 module.exports = {
   entry: './src/index.js',
@@ -27,7 +28,7 @@ module.exports = {
           {
             loader: "postcss-loader",
             options: {
-              plugins: [new Autoprefixer()]
+              plugins: [new Autoprefixer(), new PostCSSInputRange()]
             }
           },
           "sass-loader",

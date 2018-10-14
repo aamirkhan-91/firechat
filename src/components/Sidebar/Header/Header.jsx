@@ -7,9 +7,18 @@ import pp from "../../../assets/pp.png";
 import "./Header.scss";
 
 const sidebarHeader = props => {
+
+  let image = <img className="thumbnail" src={pp} />;
+
+  if (props.user) {
+    if (props.user.photoUrl) {
+      image = <img className="thumbnail" src={props.user.photoUrl} />
+    }
+  }
+
   return (
     <header className="sidebar-header">
-      <img className="thumbnail" src={pp} />
+      {image}
 
       <div>
         <Dropdown iconName="fa-ellipsis-v">

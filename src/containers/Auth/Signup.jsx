@@ -5,10 +5,12 @@ import { Link } from "react-router-dom";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 
-import firebase, { firestore } from "../../config/firebase";
+import firebase, { firestore, firebaseStorage } from "../../config/firebase";
 
 import Loader from '../../utilities/Loader/Loader';
 import ToastContainer from "../../utilities/Toast/ToastContainer";
+
+import AvatarEditor from '../../utilities/AvatarEditor/AvatarEditor';
 
 class Signup extends Component {
   state = {
@@ -51,7 +53,8 @@ class Signup extends Component {
       ],
       isValid: false
     },
-    loading: false
+    loading: false,
+    imageBlob: null
   };
 
   toastContainerRef = React.createRef();
@@ -84,6 +87,8 @@ class Signup extends Component {
       loading: true
     });
 
+    let imageBlob = this.state.imageBlob;
+
     firebase
       .auth()
       .createUserWithEmailAndPassword(
@@ -91,14 +96,24 @@ class Signup extends Component {
         this.state.signupForm.fields[2].value
       )
       .then(response => {
-        firestore
-          .collection("users")
-          .doc(response.user.uid)
-          .set({
-            uid: response.user.uid,
-            fullName: this.state.signupForm.fields[0].value,
-            email: response.user.email
-          });
+        let userDoc = firestore.collection('users').doc(response.user.uid);
+        userDoc.set({
+          uid: response.user.uid,
+          fullName: this.state.signupForm.fields[0].value,
+          email: response.user.email
+        })
+        .then(() => {
+          let storagteRootRef = firebaseStorage.ref();
+          let tempRef = storagteRootRef.child('profile-pictures/' + response.user.uid);
+          tempRef.put(imageBlob)
+          .then(() => {
+            tempRef.getDownloadURL().then(downloadUrl => {
+              userDoc.update({
+                photoUrl: downloadUrl
+              });
+            });
+          })
+        });
 
         this.setState({
           loading: false
@@ -123,8 +138,23 @@ class Signup extends Component {
     this.toastContainerRef.current.addErrorToast('Error', message);
   }
 
-  checkFormValid(form) {
+  imageReady = (imageBlob) => {
+    this.setState({
+      imageBlob: imageBlob
+    }, () => {
+      const signupForm = { ...this.state.signupForm };
+      signupForm.isValid = this.checkFormValid(this.state.signupForm);
+
+      this.setState({ signupForm: signupForm });
+    });
+  }
+
+  checkFormValid = form => {
     let isFormValid = true;
+
+    if (!this.state.imageBlob) {
+      return false;
+    }
 
     let fields = form.fields;
 
@@ -138,32 +168,35 @@ class Signup extends Component {
   }
 
   render() {
-    return <div className="auth__card">
-        <div className="auth__card__header">Create Account</div>
+    return (
+      <div className="auth__card">
+          <div className="auth__card__header">Create Account</div>
 
-        <div>
-          {this.state.signupForm.fields.map(field => (
-            <Input
-              name={field.name}
-              changed={this.inputChangedHandler}
-              label={field.label}
-              type={field.type}
-              required={field.required}
-              validation={field.validation}
-            />
-          ))}
-        </div>
+          <div>
+            {this.state.signupForm.fields.map(field => (
+              <Input
+                name={field.name}
+                changed={this.inputChangedHandler}
+                label={field.label}
+                type={field.type}
+                required={field.required}
+                validation={field.validation}
+              />
+            ))}
+          </div>
 
-        <Button clicked={this.submitHandler} disabled={!this.state.signupForm.isValid} text="Submit" />
+          <AvatarEditor onImageReady={this.imageReady} />
+          <Button block clicked={this.submitHandler} disabled={!this.state.signupForm.isValid} text="Submit" />
 
-        <span>
-          Already have an account? <Link to="/auth/signin">Sign In.</Link>
-        </span>
+          <span>
+            Already have an account? <Link to="/auth/signin">Sign In.</Link>
+          </span>
 
-        <Loader show={this.state.loading} overlay={true} transition={true} />
+          <Loader show={this.state.loading} overlay={true} transition={true} />
 
-        <ToastContainer ref={this.toastContainerRef} />
-      </div>;
+          <ToastContainer ref={this.toastContainerRef} />
+      </div>
+    );
   }
 }
 
