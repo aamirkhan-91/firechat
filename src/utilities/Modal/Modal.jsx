@@ -5,6 +5,8 @@ import { CSSTransition } from "react-transition-group";
 import Aux from "../Auxillary";
 import Backdrop from "../Backdrop/Backdrop";
 
+import Button from '../../components/UI/Button/Button';
+
 import "./Modal.scss";
 
 const modal = props => {
@@ -23,6 +25,12 @@ const modal = props => {
             <div className="modal__content">
               {props.children}
             </div>
+            {
+              props.showButtons ?
+              <div  className="modal__buttons">
+                <Button text='Accept' clicked={props.onAccept} />
+              </div> : null
+            }
           </div>
         </div>
       </CSSTransition>
