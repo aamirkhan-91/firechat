@@ -138,6 +138,7 @@ class Signin extends Component {
         </div>
 
         <Button
+          block
           clicked={this.submitHandler}
           disabled={!this.state.signupForm.isValid}
           text="Submit"
