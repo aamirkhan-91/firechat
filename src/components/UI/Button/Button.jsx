@@ -17,6 +17,10 @@ const button = props => {
     classes.push('has-label');
   }
 
+  if (props.block) {
+    classes.push('block');
+  }
+
   return (
     <button
       onClick={props.clicked}
