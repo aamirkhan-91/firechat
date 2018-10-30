@@ -9,6 +9,13 @@ header.sidebar-header {
 
   background-color: color("white");
 
+  p {
+    font-weight: bold;
+    text-transform: capitalize;
+
+    color: color("text");
+  }
+
   img {
     margin-right: 1rem;
   }

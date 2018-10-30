@@ -4,13 +4,16 @@ import React from "react";
 
 import pp from "../../../assets/pp.png";
 
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions';
+
 import "./Header.scss";
 
 const header = props => {
   let image = <img onClick={props.viewContactDetails} src={pp} className="thumbnail" />;
 
-  if (props.contact.photoUrl) {
-    image = <img onClick={props.viewContactDetails} src={props.contact.photoUrl} className="thumbnail" />;
+  if (props.contact.photoURL) {
+    image = <img onClick={props.viewContactDetails} src={props.contact.photoURL} className="thumbnail" />;
   }
 
   return (
@@ -35,4 +38,10 @@ const header = props => {
   );
 };
 
-export default header;
+const mapDispatchToProps = dispatch => {
+  return {
+    viewContactDetails: () => dispatch({ type: actions.VIEW_CONTACT_DETAILS, view: true })
+  }
+}
+
+export default connect(null, mapDispatchToProps)(header);

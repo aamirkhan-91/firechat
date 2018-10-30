@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 
-import firebase, { firestore, firebaseStorage } from "../../config/firebase";
+import firebase, { firestore, uploadPhoto, createUser } from "../../config/firebase";
 
 import Loader from '../../utilities/Loader/Loader';
 import ToastContainer from "../../utilities/Toast/ToastContainer";
@@ -67,6 +67,54 @@ class Signup extends Component {
     }
   }
 
+  createUser() {
+    this.setState({
+      loading: true
+    });
+
+    let imageBlob = this.state.imageBlob;
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(
+        this.state.signupForm.fields[1].value,
+        this.state.signupForm.fields[2].value
+      )
+      .then(response => {
+        let userDoc = firestore.collection('users').doc(response.user.uid);
+
+        userDoc.set({
+          uid: response.user.uid,
+          fullName: this.state.signupForm.fields[0].value,
+          email: response.user.email
+        })
+        .then(() => {
+          uploadPhoto('profile-pictures/' + response.user.uid, imageBlob)
+          .then((downloadUrl) => {
+            userDoc.update({
+              photoURL: downloadUrl
+            });
+
+            response.user.updateProfile({
+              displayName: this.state.signupForm.fields[0].value,
+              photoURL: downloadUrl
+            });
+          });
+        });
+
+        this.setState({
+          loading: false
+        });
+      })
+      .catch((error) => {
+        this.setState({
+          loading: false
+        });
+
+        this.handleAuthError(error);
+      });
+  }
+
   inputChangedHandler = (inputIdentifier, isValid, value) => {
     const form = { ...this.state.signupForm };
 
@@ -83,49 +131,20 @@ class Signup extends Component {
   };
 
   submitHandler = () => {
-    this.setState({
-      loading: true
+    this.setState({ loading: true });
+
+    createUser({
+      fullName: this.state.signupForm.fields[0].value,
+      email: this.state.signupForm.fields[1].value,
+      password: this.state.signupForm.fields[2].value
+    }, this.state.imageBlob)
+    .then(() => {
+      this.setState({ loading: false });
+    })
+    .catch(err => {
+      this.setState({ loading: false });
+      this.handleAuthError(err);
     });
-
-    let imageBlob = this.state.imageBlob;
-
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(
-        this.state.signupForm.fields[1].value,
-        this.state.signupForm.fields[2].value
-      )
-      .then(response => {
-        let userDoc = firestore.collection('users').doc(response.user.uid);
-        userDoc.set({
-          uid: response.user.uid,
-          fullName: this.state.signupForm.fields[0].value,
-          email: response.user.email
-        })
-        .then(() => {
-          let storagteRootRef = firebaseStorage.ref();
-          let tempRef = storagteRootRef.child('profile-pictures/' + response.user.uid);
-          tempRef.put(imageBlob)
-          .then(() => {
-            tempRef.getDownloadURL().then(downloadUrl => {
-              userDoc.update({
-                photoUrl: downloadUrl
-              });
-            });
-          })
-        });
-
-        this.setState({
-          loading: false
-        });
-      })
-      .catch((error) => {
-        this.setState({
-          loading: false
-        });
-
-        this.handleAuthError(error);
-      });
   };
 
   handleAuthError(error) {

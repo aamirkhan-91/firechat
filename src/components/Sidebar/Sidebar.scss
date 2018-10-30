@@ -13,21 +13,6 @@
   background-color: white;
   z-index: 50;
 
-  .contact-list {
-    height: 100%;
-
-    overflow-y: auto;
-
-    &::-webkit-scrollbar {
-      width: 0.75rem;
-      border-left: 1px solid darken(color("white"), 10%);
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: darken(color("white"), 10%);
-    }
-  }
-
   border-right: 1px solid darken(color("white"), 10%);
 
   @media (max-width: 900px) {

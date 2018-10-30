@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import * as actions from '../../store/actions';
+
 import { Link } from "react-router-dom";
 
 import Input from "../../components/UI/Input/Input";
@@ -7,8 +9,10 @@ import Button from "../../components/UI/Button/Button";
 
 import Loader from "../../utilities/Loader/Loader";
 
-import firebase from "../../config/firebase";
+import firebase, { registerChatListener } from "../../config/firebase";
 import ToastContainer from "../../utilities/Toast/ToastContainer";
+
+import { connect } from 'react-redux';
 
 class Signin extends Component {
   state = {
@@ -79,10 +83,12 @@ class Signin extends Component {
         this.state.signupForm.fields[0].value,
         this.state.signupForm.fields[1].value
       )
-      .then(() => {
+      .then(({ user }) => {
         this.setState({
           loading: false
         });
+
+        registerChatListener(user.uid);
       })
       .catch((error) => {
         this.setState({
@@ -155,4 +161,10 @@ class Signin extends Component {
   }
 }
 
-export default Signin;
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: user => dispatch({ type: actions.SET_USER, user })
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Signin);

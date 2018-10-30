@@ -1,23 +1,34 @@
 import React from "react";
 
 import Header from "./Header/Header";
-import Contact from "./Contact/Contact";
 import Search from "./Search/Search";
+import ContactList from "./ContactList/ContactList";
 
-import Loader from '../../utilities/Loader/Loader';
+import { connect } from 'react-redux'
 
 import "./Sidebar.scss";
 
-const sidebar = props =>  (
-  <div className={"sidebar " + (props.visible ? "visible" : '')}>
-    <Header onLogout={props.onLogout} user={props.user} />
-    <Search changed={props.filterHandler} />
+const sidebar = props =>  {
+  let classes = ["sidebar"];
 
-    <div className="contact-list">
-      <Loader show={props.loading} transition={true} overlay={true} />
-      {props.contacts.map(contact => <Contact clicked={() => props.onContactSelected(contact)} key={contact.uid} contact={contact} />)}
+  if (window.innerWidth <= 900) {
+    props.visible ? classes.push("visible") : classes.push("");
+  }
+
+  return (
+    <div className={classes.join(" ")}>
+      <Header onLogout={props.onLogout} user={props.current_user} />
+      <Search />
+
+      <ContactList />
     </div>
-  </div>
-);
+  );
+};
 
-export default sidebar;
+const mapStateToProps = state => {
+  return {
+    current_user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(sidebar);
