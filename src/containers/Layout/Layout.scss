@@ -5,8 +5,9 @@
     flex: 1;
 
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
 
     background-color: rgba(0, 0, 0, .035);
 
@@ -16,5 +17,13 @@
     text-transform: uppercase;
 
     font-size: 2rem;
+
+    > div {
+      padding: 1rem;
+    }
+
+    h3 {
+      margin: auto;
+    }
   }
 }

@@ -24,7 +24,7 @@ header.sidebar-header {
     color: color("text");
   }
 
-  > div {
+  > div:last-child {
     margin-left: auto;
 
     i {
@@ -39,7 +39,4 @@ header.sidebar-header {
     }
   }
 
-  @media(max-width: 900px) {
-    padding: 1rem 1rem 1rem 5rem;
-  }
 }

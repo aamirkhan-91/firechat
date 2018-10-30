@@ -19,12 +19,7 @@ header.chat-header {
 
   background-color: color("white");
 
-  > div {
-    margin-left: auto;
+  > div:last-child {
     display: flex;
-  }
-
-  @media(max-width: 900px) {
-    padding: 1rem 1rem 1rem 5rem;
   }
 }

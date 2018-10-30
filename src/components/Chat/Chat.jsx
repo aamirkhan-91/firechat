@@ -47,7 +47,7 @@ class Chat extends Component {
       }
 
       return (
-        <div className={"chat" + (this.props.sidebarVisible ? ' translated' : '')}>
+        <div className="chat">
           <Header contact={this.props.selectedContact} />
           <div className="chat__messages">
             { messages.length ? <div className="chat__messages__date">{relativeDate(currentDate)}</div> : null }

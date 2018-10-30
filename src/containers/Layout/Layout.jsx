@@ -3,8 +3,6 @@ import React from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Chat from "../../components/Chat/Chat";
 
-import SidebarTrigger from '../../utilities/SidebarTrigger/SidebarTrigger';
-
 import * as actions from '../../store/actions';
 
 import Modal from '../../utilities/Modal/Modal';
@@ -13,6 +11,7 @@ import ContactDetails from '../../components/ContactDetails/ContactDetails';
 import { connect } from 'react-redux'
 
 import './Layout.scss';
+import SidebarTrigger from "../../utilities/SidebarTrigger/SidebarTrigger";
 
 const layout = props => (
   <div className="container">
@@ -20,9 +19,15 @@ const layout = props => (
       <ContactDetails contact={props.selectedContact} />
     </Modal>
 
-    <SidebarTrigger clicked={props.toggleSidebar} />
     <Sidebar visible={props.sidebarVisible} />
-    { props.selectedContact ? <Chat sidebarVisible={props.sidebarVisible} /> : <div className="no-contact"> Select a Contact to get started! </div> }
+    { props.selectedContact ? <Chat /> :
+      <div className="no-contact">
+        <div>
+          <SidebarTrigger clicked={props.toggleSidebar} />
+        </div>
+        <h3>Select a Contact to get started!</h3>
+      </div>
+    }
   </div>
 );
 

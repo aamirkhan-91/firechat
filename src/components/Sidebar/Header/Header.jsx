@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../../store/actions';
 
 import "./Header.scss";
+import SidebarTrigger from "../../../utilities/SidebarTrigger/SidebarTrigger";
 
 const sidebarHeader = props => {
 
@@ -22,10 +23,9 @@ const sidebarHeader = props => {
 
   return (
     <header className="sidebar-header">
-      {image}
-
+      <SidebarTrigger clicked={props.toggleSidebar} />
+      { image }
       { props.user ? <p>{props.user.displayName}</p> : null }
-
       <div>
         <Dropdown iconName="fa-ellipsis-v">
           {/* <span>Profile</span>
@@ -39,7 +39,8 @@ const sidebarHeader = props => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    logout: () => dispatch({ type: actions.SET_USER, user: null})
+    logout: () => dispatch({ type: actions.SET_USER, user: null}),
+    toggleSidebar: () => dispatch({ type: actions.SET_SIDEBAR_VISIBLE })
   }
 }
 
