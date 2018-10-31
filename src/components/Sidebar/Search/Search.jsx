@@ -15,7 +15,7 @@ const search = props => (
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSearchChanged: (search) => dispatch({ type: actions.SET_CONTACT_SEARCH, search: search })
+    onSearchChanged: (e) => dispatch({ type: actions.SET_CONTACT_SEARCH, search: e.target.value })
   }
 }
 
