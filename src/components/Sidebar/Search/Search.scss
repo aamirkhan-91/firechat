@@ -1,5 +1,5 @@
 .contact-search {
-  padding: 1rem 2rem;
+  padding: .75rem .5rem;
 
   position: relative;
 
@@ -7,23 +7,24 @@
 
   input {
     font-family: inherit;
+    font-size: 1.4rem;
 
     width: 100%;
     padding: 0.55rem;
     border: 1px solid darken(color("white"), 10%);
 
-    border-radius: 10px;
+    border-radius: 3px;
 
     outline: none;
 
-    text-indent: 3rem;
+    text-indent: 2.5rem;
   }
 
   i {
     position: absolute;
 
     top: 50%;
-    left: 3.25rem;
+    left: 1.5rem;
     transform: translateY(-50%);
 
     font-size: 1.6rem;
