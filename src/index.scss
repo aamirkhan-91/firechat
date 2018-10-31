@@ -28,8 +28,32 @@ body {
   box-sizing: border-box;
 }
 
-.container {
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   height: 100vh;
 
-  display: flex;
+  @media (min-width: 1400px) {
+    padding: 4rem 0;
+
+    background-color: color("text-secondary");
+  }
+
+  .container {
+    height: 100%;
+
+    @media (max-width: 1399px) {
+      width: 100%
+    }
+
+    @media (min-width: 1400px) {
+      width: 1300px;
+
+      box-shadow: 0 2px 7px rgba(0, 0, 0, .15);
+    }
+
+    display: flex;
+  }
 }
