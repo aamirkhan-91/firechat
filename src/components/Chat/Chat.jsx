@@ -57,13 +57,13 @@ class Chat extends Component {
               if (!date.isSame(currentDate, 'day')) {
                 currentDate = date;
                 return (
-                  <Aux key={message.timestamp} >
+                  <Aux key={message.timestamp.getTime()} >
                     <div className="chat__messages__date">{relativeDate(currentDate)}</div>
                     <Message currentUser={this.props.currentUser} message={message} />
                   </Aux>
                 );
               } else {
-                return <Message key={message.timestamp} currentUser={this.props.currentUser} message={message} />
+                return <Message key={message.timestamp.getTime()} currentUser={this.props.currentUser} message={message} />
               }
             }) : null }
           </div>
