@@ -17,6 +17,8 @@ import { firestore, _firebase } from "../../config/firebase";
 
 class Chat extends Component {
 
+  chatMessagesRef = React.createRef();
+
   componentDidMount() {
     if (this.props.selectedContact && !this.props.selectedContact.chat) {
       firestore.collection('chats').add({
@@ -24,6 +26,18 @@ class Chat extends Component {
         messages: []
       });
     }
+
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    if (this.chatMessagesRef) {
+      this.scrollToBottom();
+    }
+  }
+
+  scrollToBottom = () => {
+    this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight - this.chatMessagesRef.clientHeight;
   }
 
   sendMessageHandler = (message) => {
@@ -35,6 +49,8 @@ class Chat extends Component {
         timestamp: new Date()
       })
     });
+
+    this.scrollToBottom();
   }
 
   render() {
@@ -49,7 +65,7 @@ class Chat extends Component {
       return (
         <div className="chat">
           <Header contact={this.props.selectedContact} />
-          <div className="chat__messages">
+          <div ref={ref => this.chatMessagesRef = ref} className="chat__messages">
             { messages.length ? <div className="chat__messages__date">{relativeDate(currentDate)}</div> : null }
             { messages.length ?  messages.map(message => {
               let date = moment(message.timestamp);
