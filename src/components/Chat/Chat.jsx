@@ -54,7 +54,7 @@ class Chat extends Component {
   }
 
   render() {
-    if (this.props.selectedContact.chat) {
+    if (this.props.selectedContact.chat && this.props.currentUser) {
       let currentDate;
       let messages = this.props.selectedContact.chat.messages ? this.props.selectedContact.chat.messages : [];
 
