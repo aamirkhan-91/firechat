@@ -9,5 +9,5 @@ export default combineReducers({
   user: userReducer,
   contacts: contactsReducer,
   chats: chatsReducer,
-  ui: uiReducer
+  ui: uiReducer,
 });
