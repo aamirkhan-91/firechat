@@ -6,31 +6,35 @@ import handleClickOutside from 'react-onclickoutside';
 import './Dropdown.scss';
 
 class Dropdown extends Component {
-
   state = {
-    show: false
+    show: false,
   }
 
   dropdownClickHandler = () => {
+    const { show } = this.state;
+
     this.setState({
-      show: !this.state.show
+      show: !show,
     });
   }
 
   handleClickOutside = () => {
     this.setState({
-      show: false
+      show: false,
     });
   }
 
   render() {
-    let classes = 'fa ' + this.props.iconName;
+    const { iconName, children } = this.props;
+    const { show } = this.state;
+
+    const classes = `fa ${iconName}`;
 
     return (
       <div onClick={this.dropdownClickHandler} className="icon">
         <i className={classes} />
-        <CSSTransition classNames="dropdown" mountOnEnter unmountOnExit appear timeout={250} in={this.state.show}>
-          <div className="dropdown">{this.props.children}</div>
+        <CSSTransition classNames="dropdown" mountOnEnter unmountOnExit appear timeout={250} in={show}>
+          <div className="dropdown">{children}</div>
         </CSSTransition>
       </div>
     );

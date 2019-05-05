@@ -1,33 +1,41 @@
-import React from "react";
+import React from 'react';
 
-import "./Button.scss";
+import './Button.scss';
 
-const button = props => {
-  let classes = ['btn', 'primary'];
+const button = ({
+  accent,
+  marginBottom,
+  hasLabel,
+  block,
+  clicked,
+  disabled,
+  text,
+}) => {
+  const classes = ['btn', 'primary'];
 
-  if (props.accent) {
+  if (accent) {
     classes.push('accent');
   }
 
-  if (props.marginBottom) {
+  if (marginBottom) {
     classes.push('margin-bottom');
   }
 
-  if (props.hasLabel) {
+  if (hasLabel) {
     classes.push('has-label');
   }
 
-  if (props.block) {
+  if (block) {
     classes.push('block');
   }
 
   return (
     <button
-      onClick={props.clicked}
-      disabled={props.disabled}
-      className={classes.join(" ")}
+      onClick={clicked}
+      disabled={disabled}
+      className={classes.join(' ')}
     >
-      {props.text}
+      {text}
     </button>
   );
 };

@@ -1,30 +1,29 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 import ReactAvatarEditor from 'react-avatar-editor';
 import Button from '../../components/UI/Button/Button';
-import Modal from '../../utilities/Modal/Modal';
+import Modal from '../Modal/Modal';
 
 import './AvatarEditor.scss';
 
-export class AvatarEditor extends Component {
-
+class AvatarEditor extends Component {
   state = {
     imgUrl: null,
     showModal: false,
-    scale: 1
+    scale: 1,
   }
 
   fileInputRef = React.createRef();
+
   editorRef = React.createRef();
-  editor;
 
   photoChangedHandler = (e) => {
-    let file = e.target.files[0];
-    let fileReader = new FileReader();
+    const file = e.target.files[0];
+    const fileReader = new FileReader();
 
     fileReader.onloadend = () => {
       this.setState({ imgUrl: fileReader.result, showModal: true });
-    }
+    };
 
     fileReader.readAsDataURL(file);
   }
@@ -40,29 +39,35 @@ export class AvatarEditor extends Component {
   }
 
   handleAcceptedPhoto = () => {
+    const { onImageReady } = this.props;
+
     if (this.editor) {
       const canvas = this.editor.getImage();
 
       canvas.toBlob((blob) => {
-        this.props.onImageReady(blob);
+        onImageReady(blob);
         this.dismissEditor();
       });
     }
   }
 
+  editor;
+
   render() {
+    const { showModal, scale, imgUrl } = this.state;
+
     return (
       [
-        <input ref={ref => this.fileInputRef = ref} onChange={this.photoChangedHandler} id="select-photo" accept={"image/*"} type="file" />,
-        <Button block marginBottom accent hasLabel text={<label htmlFor="select-photo">Select a Photo</label>} />,
-        <Modal title="Edit your Avatar" show={this.state.showModal} onAccept={this.handleAcceptedPhoto} onClose={this.dismissEditor} showButtons>
+        <input ref={(ref) => { this.fileInputRef = ref; }} onChange={this.photoChangedHandler} id="select-photo" accept="image/*" type="file" />,
+        <Button block marginBottom accent hasLabel text={<label htmlFor="select-photo">Select a Photo (required)</label>} />,
+        <Modal title="Edit your Avatar" show={showModal} onAccept={this.handleAcceptedPhoto} onClose={this.dismissEditor} showButtons>
           <div className="avatar-editor">
-            <ReactAvatarEditor ref={ref => this.editor = ref} scale={this.state.scale} border={2} borderRadius={100} image={this.state.imgUrl} />
-            <input min="1" max="3" step="0.01" value={this.state.scale} onChange={this.handleScaleChange} className="avatar-editor__range" type="range" />
+            <ReactAvatarEditor ref={(ref) => { this.editor = ref; }} scale={scale} border={2} borderRadius={100} image={imgUrl} />
+            <input min="1" max="3" step="0.01" value={scale} onChange={this.handleScaleChange} className="avatar-editor__range" type="range" />
           </div>
-        </Modal>
+        </Modal>,
       ]
-    )
+    );
   }
 }
 

@@ -1,10 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import "./Input.scss";
+import './Input.scss';
 
-const input = props => {
-
-  let textInput = React.createRef();
+const input = (props) => {
+  const textInput = React.createRef();
 
   function handleClick() {
     if (textInput.current.value) {
@@ -27,6 +26,6 @@ const input = props => {
       </div>
     </div>
   );
-}
+};
 
 export default input;

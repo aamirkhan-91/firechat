@@ -1,31 +1,34 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 import './Toast.scss';
 
 class Toast extends Component {
+  componentDidMount() {
+    const { dismiss, props } = this.props;
 
-  timeout;
-
-  componentDidMount () {
     this.timeout = setTimeout(() => {
-      this.props.dismiss(this.props.id);
+      dismiss(props.id);
     }, 5000);
   }
 
   dismissHandler = () => {
+    const { dismiss, props } = this.props;
+
     clearTimeout(this.timeout);
 
-    this.props.dismiss(this.props.id);
+    dismiss(props.id);
   }
 
   render() {
+    const { title, message, type } = this.props;
+
     return (
-      <div className={"toast " + (this.props.type)}>
+      <div className={`toast ${type}`}>
         <span onClick={this.dismissHandler} className="toast__dismiss">
-          <i className="fa fa-times"></i>
+          <i className="fa fa-times" />
         </span>
-        <p className="toast__title">{this.props.title}</p>
-        <p className="toast__message">{this.props.message}</p>
+        <p className="toast__title">{title}</p>
+        <p className="toast__message">{message}</p>
       </div>
     );
   }

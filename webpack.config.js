@@ -10,7 +10,7 @@ module.exports = (env, argv) => {
   const devMode = argv.mode === 'development';
 
   return {
-    entry: './src/index.js',
+    entry: './src/index.jsx',
     output: {
       filename: 'app.bundle.js',
       path: path.resolve(__dirname, 'dist'),

@@ -4,11 +4,15 @@ import moment from 'moment';
 
 import './Message.scss';
 
-const message = props => (
-  <div className={'message ' + (props.currentUser.uid === props.message.sender ? 'sender' : '')}>
-    {props.message.message}
-    <span className='message__timestamp'> {moment(props.message.timestamp).format('hh:mm A')} </span>
+const Message = ({ currentUser, message }) => (
+  <div className={`message ${currentUser.uid === message.sender ? 'sender' : ''}`}>
+    {message.message}
+    <span className="message__timestamp">
+      {' '}
+      {moment(message.timestamp).format('hh:mm A')}
+      {' '}
+    </span>
   </div>
-)
+);
 
-export default message;
+export default Message;

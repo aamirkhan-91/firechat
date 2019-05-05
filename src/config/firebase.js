@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 
-import { store } from '../index';
+import store from '../index';
 import * as actions from '../store/actions';
 
 const config = {

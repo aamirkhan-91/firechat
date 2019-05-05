@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-import Input from "../../components/UI/Input/Input";
-import Button from "../../components/UI/Button/Button";
+import Input from '../../components/UI/Input/Input';
+import Button from '../../components/UI/Button/Button';
 
-import firebase, { firestore, uploadPhoto, createUser } from "../../config/firebase";
+import firebase, { firestore, uploadPhoto, createUser } from '../../config/firebase';
 
 import Loader from '../../utilities/Loader/Loader';
-import ToastContainer from "../../utilities/Toast/ToastContainer";
+import ToastContainer from '../../utilities/Toast/ToastContainer';
 
 import AvatarEditor from '../../utilities/AvatarEditor/AvatarEditor';
 
@@ -17,98 +17,100 @@ class Signup extends Component {
     signupForm: {
       fields: [
         {
-          name: "name",
-          label: "Full Name",
-          type: "text",
+          name: 'name',
+          label: 'Full Name',
+          type: 'text',
           validation: {
             required: true,
-            pattern: /^[a-zA-Z](?:[a-zA-Z ]*[a-zA-Z])?$/
+            pattern: /^[a-zA-Z](?:[a-zA-Z ]*[a-zA-Z])?$/,
           },
-          value: "",
-          valid: false
+          value: '',
+          valid: false,
         },
         {
-          name: "email",
-          label: "Email",
-          type: "text",
+          name: 'email',
+          label: 'Email',
+          type: 'text',
           validation: {
             required: true,
-            pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
           },
-          value: "",
-          valid: false
+          value: '',
+          valid: false,
         },
         {
-          name: "password",
-          label: "Password",
-          type: "password",
+          name: 'password',
+          label: 'Password',
+          type: 'password',
           validation: {
             required: true,
-            minLength: 8
+            minLength: 8,
           },
           minLength: 8,
-          value: "",
-          valid: false
-        }
+          value: '',
+          valid: false,
+        },
       ],
-      isValid: false
+      isValid: false,
     },
     loading: false,
-    imageBlob: null
+    imageBlob: null,
   };
 
   toastContainerRef = React.createRef();
 
-  getFormFieldByName(fields, name) {
-    for (let i = 0; i < fields.length; i++) {
+  getFormFieldByName = (fields, name) => {
+    for (let i = 0; i < fields.length; i += 1) {
       if (fields[i].name === name) {
         return i;
       }
     }
+
+    return -1;
   }
 
-  createUser() {
+  createUser = () => {
     this.setState({
-      loading: true
+      loading: true,
     });
 
-    let imageBlob = this.state.imageBlob;
+    const { imageBlob, signupForm } = this.state;
 
     firebase
       .auth()
       .createUserWithEmailAndPassword(
-        this.state.signupForm.fields[1].value,
-        this.state.signupForm.fields[2].value
+        signupForm.fields[1].value,
+        signupForm.fields[2].value,
       )
-      .then(response => {
-        let userDoc = firestore.collection('users').doc(response.user.uid);
+      .then((response) => {
+        const userDoc = firestore.collection('users').doc(response.user.uid);
 
         userDoc.set({
           uid: response.user.uid,
-          fullName: this.state.signupForm.fields[0].value,
-          email: response.user.email
+          fullName: signupForm.fields[0].value,
+          email: response.user.email,
         })
-        .then(() => {
-          uploadPhoto('profile-pictures/' + response.user.uid, imageBlob)
-          .then((downloadUrl) => {
-            userDoc.update({
-              photoURL: downloadUrl
-            });
+          .then(() => {
+            uploadPhoto(`profile-pictures/${response.user.uid}`, imageBlob)
+              .then((downloadUrl) => {
+                userDoc.update({
+                  photoURL: downloadUrl,
+                });
 
-            response.user.updateProfile({
-              displayName: this.state.signupForm.fields[0].value,
-              photoURL: downloadUrl
-            });
+                response.user.updateProfile({
+                  displayName: signupForm.fields[0].value,
+                  photoURL: downloadUrl,
+                });
+              });
           });
-        });
 
         this.setState({
-          loading: false
+          loading: false,
         });
       })
       .catch((error) => {
         this.setState({
-          loading: false
+          loading: false,
         });
 
         this.handleAuthError(error);
@@ -116,38 +118,40 @@ class Signup extends Component {
   }
 
   inputChangedHandler = (inputIdentifier, isValid, value) => {
-    const form = { ...this.state.signupForm };
+    const { signupForm } = this.state;
 
-    let fieldIndex = this.getFormFieldByName(form.fields, inputIdentifier);
+    const fieldIndex = this.getFormFieldByName(signupForm.fields, inputIdentifier);
 
-    form.fields[fieldIndex].valid = isValid;
-    form.fields[fieldIndex].value = value;
+    signupForm.fields[fieldIndex].valid = isValid;
+    signupForm.fields[fieldIndex].value = value;
 
-    form.isValid = this.checkFormValid(form);
+    signupForm.isValid = this.checkFormValid(signupForm);
 
     this.setState({
-      signupForm: form
+      signupForm,
     });
   };
 
   submitHandler = () => {
     this.setState({ loading: true });
 
+    const { signupForm, imageBlob } = this.state;
+
     createUser({
-      fullName: this.state.signupForm.fields[0].value,
-      email: this.state.signupForm.fields[1].value,
-      password: this.state.signupForm.fields[2].value
-    }, this.state.imageBlob)
-    .then(() => {
-      this.setState({ loading: false });
-    })
-    .catch(err => {
-      this.setState({ loading: false });
-      this.handleAuthError(err);
-    });
+      fullName: signupForm.fields[0].value,
+      email: signupForm.fields[1].value,
+      password: signupForm.fields[2].value,
+    }, imageBlob)
+      .then(() => {
+        this.setState({ loading: false });
+      })
+      .catch((err) => {
+        this.setState({ loading: false });
+        this.handleAuthError(err);
+      });
   };
 
-  handleAuthError(error) {
+  handleAuthError = (error) => {
     let message = 'An error has occurred. Please try again!';
 
     if (error.code === 'auth/email-already-in-use') {
@@ -159,25 +163,26 @@ class Signup extends Component {
 
   imageReady = (imageBlob) => {
     this.setState({
-      imageBlob: imageBlob
+      imageBlob,
     }, () => {
-      const signupForm = { ...this.state.signupForm };
-      signupForm.isValid = this.checkFormValid(this.state.signupForm);
+      const { signupForm } = this.state;
+      signupForm.isValid = this.checkFormValid(signupForm);
 
-      this.setState({ signupForm: signupForm });
+      this.setState({ signupForm });
     });
   }
 
-  checkFormValid = form => {
+  checkFormValid = (form) => {
     let isFormValid = true;
+    const { imageBlob } = this.state;
 
-    if (!this.state.imageBlob) {
+    if (!imageBlob) {
       return false;
     }
 
-    let fields = form.fields;
+    const { fields } = form;
 
-    fields.forEach(field => {
+    fields.forEach((field) => {
       if (!field.valid && isFormValid) {
         isFormValid = false;
       }
@@ -187,33 +192,37 @@ class Signup extends Component {
   }
 
   render() {
+    const { signupForm, loading } = this.state;
+
     return (
       <div className="auth__card">
-          <div className="auth__card__header">Create Account</div>
+        <div className="auth__card__header">Create Account</div>
 
-          <div>
-            {this.state.signupForm.fields.map(field => (
-              <Input
-                name={field.name}
-                changed={this.inputChangedHandler}
-                label={field.label}
-                type={field.type}
-                required={field.required}
-                validation={field.validation}
-              />
-            ))}
-          </div>
+        <div>
+          {signupForm.fields.map(field => (
+            <Input
+              name={field.name}
+              changed={this.inputChangedHandler}
+              label={field.label}
+              type={field.type}
+              required={field.required}
+              validation={field.validation}
+            />
+          ))}
+        </div>
 
-          <AvatarEditor onImageReady={this.imageReady} />
-          <Button block clicked={this.submitHandler} disabled={!this.state.signupForm.isValid} text="Submit" />
+        <AvatarEditor onImageReady={this.imageReady} />
+        <Button block clicked={this.submitHandler} disabled={!signupForm.isValid} text="Submit" />
 
-          <span>
-            Already have an account? <Link to="/auth/signin">Sign In.</Link>
-          </span>
+        <span>
+            Already have an account?
+          {' '}
+          <Link to="/auth/signin">Sign In.</Link>
+        </span>
 
-          <Loader show={this.state.loading} overlay={true} transition={true} />
+        <Loader show={loading} overlay transition />
 
-          <ToastContainer ref={this.toastContainerRef} />
+        <ToastContainer ref={this.toastContainerRef} />
       </div>
     );
   }
