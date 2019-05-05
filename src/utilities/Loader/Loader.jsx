@@ -1,21 +1,21 @@
-import React from "react";
+import React from 'react';
 
-import { CSSTransition } from "react-transition-group";
+import { CSSTransition } from 'react-transition-group';
 
-import "./Loader.scss";
+import './Loader.scss';
 
-const Loader = props => {
+const Loader = (props) => {
   let component;
-  let classes = ["loader"];
+  const classes = ['loader'];
 
   if (props.overlay) {
-    classes.push("overlay");
+    classes.push('overlay');
   }
 
   if (props.transition) {
     component = (
       <CSSTransition classNames="loader" unmountOnExit appear in={props.show} timeout={350}>
-        <div className={classes.join(" ")}>
+        <div className={classes.join(' ')}>
           <i className="fa fa-spinner fa-spin fa-3x" />
         </div>
       </CSSTransition>
@@ -26,7 +26,7 @@ const Loader = props => {
     }
 
     component = (
-      <div className={classes.join(" ")}>
+      <div className={classes.join(' ')}>
         <i className="fa fa-spinner fa-spin fa-3x" />
       </div>
     );

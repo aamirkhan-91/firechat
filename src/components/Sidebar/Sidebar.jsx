@@ -1,23 +1,25 @@
-import React from "react";
+import React from 'react';
 
-import Header from "./Header/Header";
-import Search from "./Search/Search";
-import ContactList from "./ContactList/ContactList";
+import { connect } from 'react-redux';
+import Header from './Header/Header';
+import Search from './Search/Search';
+import ContactList from './ContactList/ContactList';
 
-import { connect } from 'react-redux'
 
-import "./Sidebar.scss";
+import './Sidebar.scss';
 
-const sidebar = props =>  {
-  let classes = ["sidebar"];
+const sidebar = ({ visible, onLogout, currentUser }) => {
+  const classes = ['sidebar'];
 
   if (window.innerWidth <= 900) {
-    props.visible ? classes.push("visible") : classes.push("");
+    if (visible) {
+      classes.push('visible');
+    }
   }
 
   return (
-    <div className={classes.join(" ")}>
-      <Header onLogout={props.onLogout} user={props.current_user} />
+    <div className={classes.join(' ')}>
+      <Header onLogout={onLogout} user={currentUser} />
       <Search />
 
       <ContactList />
@@ -25,10 +27,8 @@ const sidebar = props =>  {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    current_user: state.user
-  }
-}
+const mapStateToProps = state => ({
+  currentUser: state.user,
+});
 
 export default connect(mapStateToProps)(sidebar);

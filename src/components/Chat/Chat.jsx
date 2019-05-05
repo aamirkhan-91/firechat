@@ -1,29 +1,40 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import Header from "./Header/Header";
-import Input from "./Input/Input";
+import moment from 'moment';
+import Header from './Header/Header';
+import Input from './Input/Input';
 
 import Message from './Message/Message';
 
 import Aux from '../../utilities/Auxillary';
 
-import moment from 'moment';
 
-import "./Chat.scss";
+import './Chat.scss';
 
-import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
-import { firestore, _firebase } from "../../config/firebase";
+import { firestore, _firebase } from '../../config/firebase';
+
+function relativeDate(date) {
+  const today = moment();
+
+  if (today.isSame(date, 'day')) {
+    return 'TODAY';
+  } if (today.subtract(1, 'days').isSame(date, 'day')) {
+    return 'YESTERDAY';
+  } return date.format('DD/MM/YYYY');
+}
 
 class Chat extends Component {
-
   chatMessagesRef = React.createRef();
 
   componentDidMount() {
-    if (this.props.selectedContact && !this.props.selectedContact.chat) {
+    const { selectedContact, currentUser } = this.props;
+
+    if (selectedContact && !selectedContact.chat) {
       firestore.collection('chats').add({
-        members: [this.props.selectedContact.uid, this.props.currentUser.uid],
-        messages: []
+        members: [selectedContact.uid, currentUser.uid],
+        messages: [],
       });
     }
 
@@ -41,22 +52,26 @@ class Chat extends Component {
   }
 
   sendMessageHandler = (message) => {
-    firestore.collection('chats').doc(this.props.selectedContact.chat.id).update({
+    const { selectedContact, currentUser } = this.props;
+
+    firestore.collection('chats').doc(selectedContact.chat.id).update({
       messages: _firebase.firestore.FieldValue.arrayUnion({
-        sender: this.props.currentUser.uid,
-        receiver: this.props.selectedContact.uid,
-        message: message,
-        timestamp: new Date()
-      })
+        sender: currentUser.uid,
+        receiver: selectedContact.uid,
+        message,
+        timestamp: new Date(),
+      }),
     });
 
     this.scrollToBottom();
   }
 
   render() {
-    if (this.props.selectedContact.chat && this.props.currentUser) {
+    const { selectedContact, currentUser, sidebarVisible } = this.props;
+
+    if (selectedContact.chat && currentUser) {
       let currentDate;
-      let messages = this.props.selectedContact.chat.messages ? this.props.selectedContact.chat.messages : [];
+      const messages = selectedContact.chat.messages ? selectedContact.chat.messages : [];
 
       if (messages.length) {
         currentDate = moment(messages[0].timestamp);
@@ -64,61 +79,45 @@ class Chat extends Component {
 
       return (
         <div className="chat">
-          <Header contact={this.props.selectedContact} />
+          <Header contact={selectedContact} />
           <div ref={ref => this.chatMessagesRef = ref} className="chat__messages">
             { messages.length ? <div className="chat__messages__date">{relativeDate(currentDate)}</div> : null }
-            { messages.length ?  messages.map(message => {
-              let date = moment(message.timestamp);
+            { messages.length ? messages.map((message) => {
+              const date = moment(message.timestamp);
 
               if (!date.isSame(currentDate, 'day')) {
                 currentDate = date;
                 return (
-                  <Aux key={message.timestamp.getTime()} >
+                  <Aux key={message.timestamp.getTime()}>
                     <div className="chat__messages__date">{relativeDate(currentDate)}</div>
-                    <Message currentUser={this.props.currentUser} message={message} />
+                    <Message currentUser={currentUser} message={message} />
                   </Aux>
                 );
-              } else {
-                return <Message key={message.timestamp.getTime()} currentUser={this.props.currentUser} message={message} />
               }
+              return <Message key={message.timestamp.getTime()} currentUser={currentUser} message={message} />;
             }) : null }
           </div>
           <Input send={this.sendMessageHandler} />
         </div>
       );
-    } else {
-      return (
-        <div className={"chat" + (this.props.sidebarVisible ? ' translated' : '')}>
-          <Header contact={this.props.selectedContact} />
-          <div className="chat__messages"></div>
-          <Input send={this.sendMessageHandler} />
-        </div>
-      );
     }
+    return (
+      <div className={`chat${sidebarVisible ? ' translated' : ''}`}>
+        <Header contact={selectedContact} />
+        <div className="chat__messages" />
+        <Input send={this.sendMessageHandler} />
+      </div>
+    );
   }
 }
 
-function relativeDate(date) {
-  let today = moment();
+const mapStateToProps = state => ({
+  currentUser: state.user,
+  selectedContact: state.contacts.selectedContact,
+});
 
-  if (today.isSame(date, 'day')) {
-    return 'TODAY';
-  } else if (today.subtract(1, 'days').isSame(date, 'day')) {
-    return 'YESTERDAY';
-  } else return date.format('DD/MM/YYYY');
-}
-
-const mapStateToProps = state => {
-  return {
-    currentUser: state.user,
-    selectedContact: state.contacts.selectedContact
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    toggleSidebar: () => dispatch({ type: actions.SET_SIDEBAR_VISIBLE})
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  toggleSidebar: () => dispatch({ type: actions.SET_SIDEBAR_VISIBLE }),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

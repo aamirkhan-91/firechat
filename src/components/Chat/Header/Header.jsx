@@ -1,28 +1,28 @@
-import React from "react";
+import React from 'react';
 
 // import Dropdown from "../../UI/Dropdown/Dropdown";
 
-import pp from "../../../assets/pp.png";
-
 import { connect } from 'react-redux';
+import pp from '../../../assets/pp.png';
+
 import * as actions from '../../../store/actions';
 
-import "./Header.scss";
-import SidebarTrigger from "../../../utilities/SidebarTrigger/SidebarTrigger";
+import './Header.scss';
+import SidebarTrigger from '../../../utilities/SidebarTrigger/SidebarTrigger';
 
-const header = props => {
-  if (props.contact) {
-    let image = <img onClick={props.viewContactDetails} src={pp} className="thumbnail" />;
+const header = ({ contact, viewContactDetails, toggleSidebar }) => {
+  if (contact) {
+    let image = <img onClick={viewContactDetails} src={pp} className="thumbnail" />;
 
-    if (props.contact.photoURL) {
-      image = <img onClick={props.viewContactDetails} src={props.contact.photoURL} className="thumbnail" />;
+    if (contact.photoURL) {
+      image = <img onClick={viewContactDetails} src={contact.photoURL} className="thumbnail" />;
     }
 
     return (
       <header className="chat-header">
-        <SidebarTrigger clicked={props.toggleSidebar} />
+        <SidebarTrigger clicked={toggleSidebar} />
         { image }
-        { props.contact ? <h3>{props.contact.fullName}</h3> : null }
+        { contact ? <h3>{contact.fullName}</h3> : null }
 
         {/* <div>
           <div className="icon">
@@ -39,20 +39,17 @@ const header = props => {
         </div> */}
       </header>
     );
-  } else {
-    return (
-      <header className="chat-header">
-        <SidebarTrigger clicked={props.toggleSidebar} />
-      </header>
-    )
   }
+  return (
+    <header className="chat-header">
+      <SidebarTrigger clicked={toggleSidebar} />
+    </header>
+  );
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    viewContactDetails: () => dispatch({ type: actions.VIEW_CONTACT_DETAILS, view: true }),
-    toggleSidebar: () => dispatch({ type: actions.SET_SIDEBAR_VISIBLE })
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  viewContactDetails: () => dispatch({ type: actions.VIEW_CONTACT_DETAILS, view: true }),
+  toggleSidebar: () => dispatch({ type: actions.SET_SIDEBAR_VISIBLE }),
+});
 
 export default connect(null, mapDispatchToProps)(header);
