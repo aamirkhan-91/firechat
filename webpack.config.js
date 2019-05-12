@@ -13,7 +13,7 @@ module.exports = (env, argv) => {
     entry: './src/index.jsx',
     output: {
       filename: 'app.bundle.js',
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, 'public_html'),
       publicPath: '/',
     },
     module: {
