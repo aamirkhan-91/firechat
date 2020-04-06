@@ -5,6 +5,9 @@ const Autoprefixer = require('autoprefixer');
 const PostCSSInputRange = require('postcss-input-range');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssNanoPlugin = require('cssnano');
+const Webpack = require('webpack');
+
+const environmentVariables = require('./src/config/env');
 
 module.exports = (env, argv) => {
   const devMode = argv.mode === 'development';
@@ -63,6 +66,9 @@ module.exports = (env, argv) => {
       }),
       new MiniCssExtractPlugin({
         filename: 'styles.css',
+      }),
+      new Webpack.DefinePlugin({
+        'process.env': environmentVariables,
       }),
     ],
     devServer: {

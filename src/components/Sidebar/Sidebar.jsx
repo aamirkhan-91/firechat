@@ -5,7 +5,6 @@ import Header from './Header/Header';
 import Search from './Search/Search';
 import ContactList from './ContactList/ContactList';
 
-
 import './Sidebar.scss';
 
 const sidebar = ({ visible, onLogout, currentUser }) => {
