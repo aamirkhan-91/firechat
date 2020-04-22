@@ -9,11 +9,10 @@ import Message from './Message/Message';
 
 import Aux from '../../utilities/Auxillary';
 
-
-import './Chat.scss';
-
 import * as actions from '../../store/actions';
 import { firestore, _firebase } from '../../config/firebase';
+
+import './Chat.scss';
 
 function relativeDate(date) {
   const today = moment();
@@ -42,13 +41,15 @@ class Chat extends Component {
   }
 
   componentDidUpdate() {
-    if (this.chatMessagesRef) {
+    if (this.chatMessagesRef.current) {
       this.scrollToBottom();
     }
   }
 
   scrollToBottom = () => {
-    this.chatMessagesRef.scrollTop = this.chatMessagesRef.scrollHeight - this.chatMessagesRef.clientHeight;
+    if (this.chatMessagesRef.current) {
+      this.chatMessagesRef.current.scrollTop = this.chatMessagesRef.current.scrollHeight - this.chatMessagesRef.current.clientHeight;
+    }
   }
 
   sendMessageHandler = (message) => {
@@ -80,7 +81,7 @@ class Chat extends Component {
       return (
         <div className="chat">
           <Header contact={selectedContact} />
-          <div ref={ref => this.chatMessagesRef = ref} className="chat__messages">
+          <div ref={this.chatMessagesRef} className="chat__messages">
             { messages.length ? <div className="chat__messages__date">{relativeDate(currentDate)}</div> : null }
             { messages.length ? messages.map((message) => {
               const date = moment(message.timestamp);
