@@ -4,19 +4,19 @@ import './Toast.scss';
 
 class Toast extends Component {
   componentDidMount() {
-    const { dismiss, props } = this.props;
+    const { dismiss, id } = this.props;
 
     this.timeout = setTimeout(() => {
-      dismiss(props.id);
+      dismiss(id);
     }, 5000);
   }
 
   dismissHandler = () => {
-    const { dismiss, props } = this.props;
+    const { dismiss, id } = this.props;
 
     clearTimeout(this.timeout);
 
-    dismiss(props.id);
+    dismiss(id);
   }
 
   render() {

@@ -13,13 +13,13 @@ class ToastContainer extends Component {
   }
 
   addErrorToast = (title, message) => {
-    const { toasts } = this.state;
-    let currentIndex = this.state.index;
+    const { toasts, index } = this.state;
+    let currentIndex = index;
 
     toasts.unshift({
       title, message, type: 'error', id: currentIndex,
     });
-    currentIndex++;
+    currentIndex += 1;
 
     this.setState({
       toasts,
@@ -30,7 +30,7 @@ class ToastContainer extends Component {
   dismissToast = (toastId) => {
     const { toasts } = this.state;
 
-    for (let i = 0; i < toasts.length; i++) {
+    for (let i = 0; i < toasts.length; i += 1) {
       if (toasts[i].id === toastId) {
         toasts.splice(i, 1);
       }
