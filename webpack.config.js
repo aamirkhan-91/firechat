@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const Autoprefixer = require('autoprefixer');
 const PostCSSInputRange = require('postcss-input-range');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -60,7 +59,6 @@ module.exports = (env, argv) => {
       ],
     },
     plugins: [
-      new CleanWebpackPlugin(['dist']),
       new HtmlWebpackPlugin({
         template: './src/index.html',
       }),
