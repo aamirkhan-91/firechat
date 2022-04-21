@@ -50,7 +50,7 @@ const App = () => {
     <>
       <div
         className={clsx(
-          'h-screen bg-blue transition-colors duration-300 xl:p-12',
+          'h-full bg-blue transition-colors duration-300 xl:p-12',
           {
             'bg-blue': !isAuthenticated,
             'bg-[#757575]': isAuthenticated,
