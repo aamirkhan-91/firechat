@@ -25,10 +25,22 @@ const Chat: FC = () => {
 
   if (!isAuthenticated) return <Navigate to='/auth/login' />;
 
+  let animate;
+
+  if (!isMd) {
+    animate = 'disabled';
+  } else {
+    if (isSidebarVisible) {
+      animate = 'open';
+    } else {
+      animate = 'closed';
+    }
+  }
+
   return (
     <div className='mx-auto flex h-full w-full max-w-[1400px] items-center justify-center shadow-lg'>
       <motion.div
-        animate={isSidebarVisible ? 'open' : 'closed'}
+        animate={animate}
         className='relative flex h-full w-full overflow-hidden rounded-md'
       >
         <SidebarTrigger
