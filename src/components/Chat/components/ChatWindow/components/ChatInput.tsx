@@ -26,8 +26,10 @@ const ChatInput: FC<Props> = ({ onSendMessage }) => {
   };
 
   const onSendButtonClicked = () => {
-    onSendMessage(value.trim());
-    setValue('');
+    if (value) {
+      onSendMessage(value.trim());
+      setValue('');
+    }
   };
 
   return (
