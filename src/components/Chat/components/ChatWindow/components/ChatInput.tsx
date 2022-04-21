@@ -25,6 +25,11 @@ const ChatInput: FC<Props> = ({ onSendMessage }) => {
     }
   };
 
+  const onSendButtonClicked = () => {
+    onSendMessage(value.trim());
+    setValue('');
+  };
+
   return (
     <div className='mt-auto flex w-full items-center justify-between border-t border-solid border-border bg-[#eee] p-3'>
       <input
@@ -36,7 +41,7 @@ const ChatInput: FC<Props> = ({ onSendMessage }) => {
       />
       <button
         className='rounded-full p-1 text-secondary transition-colors duration-200 hover:bg-[#00000010]'
-        onClick={() => onSendMessage(value)}
+        onClick={onSendButtonClicked}
       >
         <PlayIcon size='lg' className='text-secondary' />
       </button>
