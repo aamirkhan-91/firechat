@@ -1,13 +1,11 @@
 import SidebarTrigger from 'components/core/SidebarTrigger';
-import DotsIcon from 'icons/DotsIcon';
-import MenuIcon from 'icons/MenuIcon';
+import LogoutIcon from 'icons/LogoutIcon';
 import pp from 'images/pp.png';
 import { FC } from 'react';
+import { logout } from 'services/auth';
 import { useStore } from 'store';
-import { User } from 'types/user';
 
 type Props = {
-  onLogout: () => void;
   onClickSidebarTrigger: () => void;
 };
 
@@ -29,16 +27,13 @@ const Header: FC<Props> = ({ onClickSidebarTrigger }) => {
       {user ? (
         <p className='font-bold capitalize text-primary'>{user.displayName}</p>
       ) : null}
-      <div>
-        {/* <Dropdown iconName='fa-ellipsis-v'> */}
-        {/* <span>Profile</span>
-            <span>Settings</span> */}
-        {/* <span onClick={() => firebaseAuth.signOut()}>Logout</span> */}
-        {/* </Dropdown> */}
-      </div>
+      <div></div>
       <div className='ml-auto flex items-center space-x-1'>
-        <button className='rounded-full p-2 text-secondary transition-colors duration-200 hover:bg-[#00000010]'>
-          <DotsIcon size='md' />
+        <button
+          className='rounded-full p-2 text-secondary transition-colors duration-200 hover:bg-[#00000010]'
+          onClick={logout}
+        >
+          <LogoutIcon size='md' />
         </button>
       </div>
     </header>

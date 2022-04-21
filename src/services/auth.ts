@@ -6,13 +6,19 @@ import {
   setPersistence,
   signInWithEmailAndPassword,
   updateProfile,
+  signOut,
   // eslint-disable-next-line import/named
   User,
   // eslint-disable-next-line import/named
   UserCredential,
 } from 'firebase/auth';
 import { doc, getFirestore, setDoc } from 'firebase/firestore';
-import { AuthErrorCodes, AuthResponse, FirebaseAuthError, SignUpRequest } from 'types/auth';
+import {
+  AuthErrorCodes,
+  AuthResponse,
+  FirebaseAuthError,
+  SignUpRequest,
+} from 'types/auth';
 
 import firebaseApp from '../firebase';
 
@@ -23,7 +29,7 @@ setPersistence(auth, browserLocalPersistence);
 
 const authErrorMap: { [key in AuthErrorCodes]?: string } = {
   [AuthErrorCodes.EMAIL_EXISTS]: 'The provided email is already in use.',
-  [AuthErrorCodes.USER_DELETED]: 'The provided email address wasn\'t found.',
+  [AuthErrorCodes.USER_DELETED]: "The provided email address wasn't found.",
   [AuthErrorCodes.INVALID_PASSWORD]: 'The provided password is incorrect.',
 };
 
@@ -113,6 +119,28 @@ export const requestVerificationEmail = (
 ): Promise<AuthResponse<void>> => {
   return new Promise((resolve) => {
     sendEmailVerification(user)
+      .then((response) => {
+        resolve({
+          ok: true,
+          data: response,
+        });
+      })
+      .catch((error: FirebaseAuthError) => {
+        resolve({
+          ok: false,
+          error: {
+            code: error.code,
+            message: error.message,
+            name: error.name,
+          },
+        });
+      });
+  });
+};
+
+export const logout = () => {
+  return new Promise((resolve) => {
+    signOut(auth)
       .then((response) => {
         resolve({
           ok: true,

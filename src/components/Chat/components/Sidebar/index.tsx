@@ -119,10 +119,7 @@ const Sidebar: FC<Props> = ({ onClickSidebarTrigger, onClickContact }) => {
       variants={States}
       className='absolute z-[5] flex h-full w-[300px] flex-col border-r border-solid border-border bg-[#fff]'
     >
-      <Header
-        onLogout={() => null}
-        onClickSidebarTrigger={onClickSidebarTrigger}
-      />
+      <Header onClickSidebarTrigger={onClickSidebarTrigger} />
       <div className='flex items-center border-b border-solid border-border py-2 pl-2 pr-2'>
         <Search query={searchQuery} onQueryChanged={setSearchQuery} />
       </div>
